@@ -1,0 +1,674 @@
+#:import Factory kivy.factory.Factory
+Window:
+  Main:
+  Admin:
+  Tasks:
+  AddTask:
+  AddStaff:
+  SignUp:
+  RV:
+  DeleteStaff:
+
+<SpinnerOptions>
+  background_color:1,1,1,1
+  font_size:26
+  background_normal:""
+  color:0,1,0,1
+<Main>:
+  name:"main"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      pos:self.pos
+      size:self.size
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.2,"y":0.7}
+        source:"afsc.png"
+      Label:
+        text: "UserName"
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.2,"y":0.5}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        id:u
+        on_text:
+          root.manager.user.usertext = self.text
+        size_hint:0.2,0.1
+        pos_hint:{"x": 0.6,"y":0.5}
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+
+      Label:
+        text:"Password"
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.2, "y":0.3}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        id:p
+        on_text:
+          root.manager.user.passtext = self.text
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.6,"y":0.3}
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+        password:True
+
+      Button:
+        text:"LOGIN"
+        size_hint:0.2,0.1
+        pos_hint:{"x": 0.2, "y":0.1}
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          root.manager.transition.direction ="up"
+          root.Login()
+        background_color:1,0,1,1
+
+
+      Button:
+        text:"SIGN UP"
+        pos_hint:{"x":0.6, "y":0.1}
+        size_hint:0.2,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          app.root.transition.direction ="left"
+          app.root.current ="signup"
+        background_color:0,0,0,1
+
+      Button:
+        text:"CLEAR"
+        pos_hint:{"x":0.4,"y":0.1}
+        size_hint:0.2,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          u.text =""
+          p.text =""
+
+        background_color:1,0,0,1
+
+
+<Tasks>
+  name:"tasks"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      pos:self.pos
+      size:self.size
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.2,"y":0.9}
+        source:"afsc.png"
+
+      Label:
+        text:"Welcome"
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.1,"y":0.8}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0.41, 0.42, 0.74, 1
+
+      Label:
+        text: root.manager.user.usertext
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.1, "y":0.7}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,1,1
+
+      Button:
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.1,"y":0.5}
+        text:"View Tasks"
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          app.root.transition.direction ="left"
+          app.root.current ="view"
+        background_color:0,1,0,1
+
+
+
+      Button:
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.6,"y":0.5}
+        text:"Add Tasks"
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          app.root.transition.direction ="right"
+          app.root.current = "addt"
+        background_color:1,0,1,1
+
+
+      Button:
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.1,"y":0.3}
+        text:"LOG OFF"
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          app.root.transition.direction ="down"
+          app.root.current ="main"
+        background_color:0,0,1,1
+
+      Button:
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.6,"y":0.9}
+        text:"FY Schedule"
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:(0,1,0,1)
+
+<Admin>
+  name:"admin"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  GridLayout:
+    cols:2
+
+    FloatLayout:
+      Label:
+        text:"Welcome Admin"
+        pos_hint:{"x":0.0,"y":0.8}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:1,0,1,1
+      Label:
+        text:root.manager.user.usertext
+        pos_hint:{"x":0.0,"y":0.7}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:1,0,1,1
+      Image:
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.4,"y":0.7}
+        source:"afsc.png"
+      TabbedPanel:
+        do_default_tab: False
+        tab_width: root.width / 3
+        background_color: 102,255,255,1
+        border:[0,0,0,0]
+        pos_hint:{"x":0.2,"y":0.3}
+        size_hint:0.6,0.3
+
+        TabbedPanelItem:
+          text:"Organisational"
+          background_color:1,0,1,1
+          font_size:(root.width**2 + root.height**2)/13**4
+          size_hint:0.5,0.3
+          GridLayout:
+            cols:1
+            BoxLayout:
+              spacing:2
+              orientation:"vertical"
+              Button:
+                text:"Add Staff"
+                size_hint:0.4,0.1
+                on_release:
+                  app.root.current="adds"
+                  app.root.transition.direction ="down"
+                pos_hint:
+                  {"x":0.1,"y":0.9}
+                background_color:1,0,1,1
+                font_size:(root.width**2 + root.height**2)/13**4
+
+              Button:
+                text:"Delete Staff"
+                size_hint:0.4,0.1
+                on_release:
+                  app.root.current="delete"
+                  app.root.transition.direction ="down"
+                pos_hint:{"x":0.1,"y":0.8}
+                background_color:1,0,1,1
+                font_size:(root.width**2 + root.height**2)/13**4
+
+
+        TabbedPanelItem:
+          text:"Personal"
+          font_size:(root.width**2 + root.height**2)/13**4
+          background_color:1,0,1,1
+
+          size_hint:0.4,0.3
+          BoxLayout:
+            orientation:"vertical"
+            spacing:2
+            Button:
+              text:"Add Task"
+              size_hint:0.3,0.1
+              on_release:
+                app.root.current="addt"
+                app.root.transition.direction ="down"
+              pos_hint:{"x":0.6,"y":0.8}
+              size_hint:0.4,0.1
+              font_size:(root.width**2 + root.height**2)/13**4
+              background_color:1,0,1,1
+
+            Button:
+              text:"View Tasks"
+              size_hint:0.3,0.1
+              on_release:
+                app.root.current="view"
+                app.root.transition.direction ="down"
+              pos_hint:{"x":0.6,"y":0.7}
+              size_hint:0.4,0.1
+              font_size:(root.width**2 + root.height**2)/13**4
+              background_color:1,0,1,1
+      Button:
+        text:"BACK"
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.2,"y":0.1}
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:0,1,0,1
+        on_release:
+          app.root.current = "main"
+          app.root.transition.direction = "down"
+
+
+
+
+
+
+
+
+
+
+
+
+<SignUp>
+  name:"signup"
+  user:user
+  pass1:pass1
+  pass2:pass2
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      pos:self.pos
+      size:self.size
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.1,"y":0.9}
+        source:"afsc.png"
+
+      Label:
+        text:"UserName"
+        pos_hint:{"x":0.1,"y":0.8}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+
+      TextInput:
+        id:user
+        pos_hint:{"x":0.5, "y":0.8}
+        size_hint:0.3,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+
+
+      Label:
+        text:"Password"
+        pos_hint:{"x":0.1,"y":0.6}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        id:pass1
+        pos_hint:{"x":0.5, "y":0.6}
+        size_hint:0.3,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+        password:True
+
+      Label:
+        text:"Password Again"
+        pos_hint:{"x":0.1,"y":0.4}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        id:pass2
+        pos_hint:{"x":0.5, "y":0.4}
+        size_hint:0.3,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+        password:True
+
+      Button:
+        text: "SUBMIT"
+        pos_hint:{"x": 0.3, "y": 0.2}
+        size_hint:0.2,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          root.submit()
+        background_color:0,0,0,1
+
+      Button:
+        text:"LOGIN"
+        pos_hint:{"x":0.5,"y":0.2}
+        size_hint:0.2,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          app.root.transition.direction ="right"
+          app.root.current ="main"
+        background_color:1,0,1,1
+
+      Button:
+        text:"CLEAR"
+        pos_hint:{"x":0.7,"y":0.2}
+        size_hint:0.2,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        on_release:
+          root.clear()
+        background_color:1,0,0,1
+
+
+
+<AddTask>
+  name:"addt"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.3,"y":0.8}
+        source:"afsc.png"
+
+      Label:
+        text:"TaskName"
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.0,"y":0.6}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        on_text:
+          root.manager.user.taskName = self.text
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.4,"y":0.6}
+        font_size:(root.width**2 + root.height**2)/13**4
+
+      Label:
+        text:"TaskDescription"
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.0,"y":0.4}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        on_text:
+          root.manager.user.taskd =self.text
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.4,"y":0.4}
+        font_size:(root.width**2 + root.height**2)/13**4
+
+      Label:
+        text:"DeadLine"
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.0,"y":0.2}
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,0,1
+
+      TextInput:
+        on_text:
+          root.manager.user.time = self.text
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.4,"y":0.2}
+        font_size:(root.width**2 + root.height**2)/13**4
+        hint_text:"dd/mm/yyyy"
+
+      Button:
+        text:"SUBMIT"
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.5,"y":0.1}
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:1,0,1,1
+        on_release:
+          root.submit()
+
+      Button:
+        text:"BACK"
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.1,"y":0.1}
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:0,1,0,1
+        on_release:
+          app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
+          app.root.transition.direction ="left"
+
+
+
+<AddStaff>
+  name:"adds"
+  spi:spi
+  nam:nam
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos: self.pos
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.4,0.2
+        pos_hint:{"x":0.3,"y":0.8}
+        source:"afsc.png"
+      Label:
+        text: "Name"
+        pos_hint:{"x":0.0,"y":0.6}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,1,1
+
+      TextInput:
+        id:nam
+        pos_hint:{"x":0.4,"y":0.6}
+        size_hint:0.3,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        multiline:False
+
+
+      Label:
+        text:"Gender"
+        pos_hint:{"x":0.0,"y":0.4}
+        size_hint:0.4,0.1
+        font_size:(root.width**2 + root.height**2)/13**4
+        color:0,0,1,1
+
+      Spinner:
+        id:spi
+        text:"Gender"
+        values:("Male","Female")
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.4,"y":0.4}
+        font_size:(root.width**2 + root.height**2)/13**4
+
+      Button:
+        text:"SUBMIT"
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.2,"y":0.2}
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:1,0,1,1
+        on_release:
+          root.add()
+
+      Button:
+        text:"BACK"
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.5,"y":0.2}
+        font_size:(root.width**2 + root.height**2)/13**4
+        background_color:1,1,0,1
+        on_release:
+          app.root.current ="admin"
+
+
+<RV>:
+  name:"view"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  GridLayout:
+    cols:1
+    FloatLayout:
+      Image:
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.2,"y":0.8}
+        source:"afsc.png"
+      RecycleView:
+        viewclass: 'Ty'
+        size_hint:0.4,0.5
+        pos_hint:{"x":0.5,"y":0.3}
+        data:[{'text': str(x)} for x in root.staff]
+        RecycleBoxLayout:
+          default_size: None, dp(56)
+          default_size_hint: 1, None
+          orientation: 'vertical'
+          multiselect:False
+          touch_multiselect: False
+          size_hint_y: None
+          height: self.minimum_height
+      Button:
+        text:"BACK"
+        pos_hint:{"x":0.0,"y":0.2}
+        font_size:(root.width**2 + root.height**2)/13**4
+        size_hint:0.2,0.1
+        on_release:
+          app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
+
+
+
+
+<DeleteStaff>
+  name:"delete"
+  spi:spi
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.4,0.2
+        pos_hint:{"x":0.3,"y":0.8}
+        source:"afsc.png"
+
+      Label:
+        text:"SELECT NAME"
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.1,"y":0.6}
+        color:1,0,0,1
+        font_size:26
+
+
+
+      Spinner:
+        id:spi
+        text:"Choose Name"
+        values:root.u
+        size_hint:0.3,0.1
+        pos_hint:{"x":0.5,"y":0.6}
+        font_size:26
+        background_normal:''
+        background_color:1,1,1,1
+        option_cls:Factory.get("SpinnerOptions")
+        color:0,1,0,1
+
+      Button:
+        text:"DELETE"
+        font_size:26
+        pos_hint:{"x":0.2,"y":0.4}
+        size_hint:0.3,0.1
+        background_color:0,0,0,1
+        on_release:
+          root.add()
+
+      Button:
+        text:"BACK"
+        font_size:26
+        pos_hint:{"x":0.2,"y":0.3}
+        size_hint:0.3,0.1
+        background_color:1,1,1,1
+        on_release:
+          root.back()
+          app.root.transition.direction="up"
+          app.root.current ="admin"
+
+<DeletePop>
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  Label:
+    text:"Do you want to permanantly delete this employee"
+    pos_hint:{"x":0.3,"y":0.6}
+    size_hint:0.4,0.1
+    halign:"center"
+    color:0,0,0,1
+
+  Button:
+    text:"YES"
+    pos_hint:{"x":0.2,"y":0.3}
+    size_hint:0.3,0.2
+    background_color:0,0,1,1
+    on_release:
+      app.de.delete()
+
+  Button:
+    text:"NO"
+    pos_hint:{"x":0.5,"y":0.3}
+    size_hint:0.3,0.2
+    background_color:0,0,1,1
+
+<TestCheckbox>
+  Button:
+    text:"Pending"
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.1,"y":0.6}
+    on_release:
+
+  Button
+    text:"Completed"
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.3,"y":0.6}
+    on_release:
+
+<Ty>
+  font_size:30
+  pos_hint:{"x":0.5,"y":0.6}
+  width:300
+  height:100
+
+
+
