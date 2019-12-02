@@ -4,7 +4,7 @@ con = sqlite3.connect("AFSC.db")
 cur =con.cursor()
 
 
-class MyState(EventDispatcher):
+class MyState(EventDispatcher):#Stores data that is passed between pages
     usertext = StringProperty()
     passtext = StringProperty()
     taskName = StringProperty()
@@ -12,20 +12,17 @@ class MyState(EventDispatcher):
     time = StringProperty()
     gender = StringProperty()
     deleteName = StringProperty()
+    task =StringProperty()
 
 
 
-class Window(ScreenManager):
+class Window(ScreenManager):#Manages all proceeses of all Pages
    user =ObjectProperty(MyState())
 
-class Dispatch:
-    user = ObjectProperty(MyState())
 
 
 
-
-
-class Main(Screen):
+class Main(Screen):#Login Page
 
      def Login(self):
         if self.manager.user.usertext =="" or self.manager.user.passtext=="":
@@ -49,14 +46,14 @@ class Main(Screen):
                         else:
                             self.parent.current ="tasks"
 
-class Tasks(Screen):
+class Tasks(Screen):#Users Page
     pass
 
-class Admin(Screen):
+class Admin(Screen):#Admin page
 
     pass
 
-class SignUp(Screen):
+class SignUp(Screen):#SignUp page
     user = ObjectProperty(None)
     pass1 =ObjectProperty(None)
     pass2 = ObjectProperty(None)
@@ -104,7 +101,14 @@ class SignUp(Screen):
                         webbrowser.open('http://www.google.com')
 
 
-class AddTask(Screen):
+class AddTask(Screen):#Page for adding Tasks
+
+    def show_date(self):
+        picker =MDDatePicker(callback =self.got_date)
+        picker.open()
+
+    def got_date(self,the_date):
+        print(the_date)
 
     def  submit(self):
         cur.execute("INSERT INTO TASKS VALUES(?,?,?,?)",(self.manager.user.usertext,self.manager.user.taskName,self.manager.user.taskd,self.manager.user.time))
@@ -113,7 +117,7 @@ class AddTask(Screen):
         pop.open()
 
 
-class AddStaff(Screen):
+class AddStaff(Screen):#Page for adding staff
     nam =ObjectProperty(None)
     spi =ObjectProperty(None)
 
@@ -144,15 +148,21 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,RecycleB
 class TestCheckbox(FloatLayout):
     pass
 
-class Ty(Label):
+class TaskLayout(Button):
     color =(0,0,1,1)
-    size =(240,190)
+    background_color=(255,255,255,255)
+
+    def  on_press(self):
+      self.t =GridLayout()
+      self.t.cols =2
+      b1 = Button(text ="Completed",size_hint =(0.4,0.1),pos_hint ={"x":0.2,"y":0.6})
+      b2 = Button(text = "Pending",size_hint =(0.4,0.1),pos_hint = {"x":0.4,"y":0.6})
+      self.t.add_widget(b1)
+      self.t.add_widget(b2)
+      pop =Popup(title ="Assess", content =self.t,size=(200,200),size_hint =(None,None))
+      pop.open()
 
 
-
-
-    def on_press(self):
-        show_pop()
 
 
 class RV(Screen):
@@ -169,59 +179,64 @@ class RV(Screen):
         else:
             T = "NO PENDING TASKS"
             self.staff.append(T)
-class DeletePop(FloatLayout):
-    pass
+    def clear(self):
+        self.staff.clear()
+class DeletePop(Popup):
 
     def delete(self):
-        cur.execute("Delete from staff where UserName =? ",())
-        con.commit
-        p = Popup(title = "Confirmation", content =Label(text =  +"successfully deleted"), size =(200,200),size_hint =(None,None))
-        p.open()
+        de =DeleteStaff(self)
+        de.delete()
 
 
 class DeleteStaff(Screen):
     spi = ObjectProperty()
     u = ListProperty([])
-    def on_enter(self):
+
+    def on_enter(self):#Retrieving UserNames from the Server for deletion
         cur.execute("SELECT UserName FROM STAFF ")
         for e in cur:
             for i in e:
                 self.u.append(i)
 
     def delete(self):#functionality for delete on popup
-        t = self.spi.text
-        cur.execute("Delete from staff where UserName =?",(t,))
-        con.commit()
-        p = Popup(title = "Confirmation", content =t +"successfully deleted", size =(200,200), size_hint =(None,None))
-        p.open()
 
+        t = self.spi.text
+        self.Pop = GridLayout()
+
+
+        self.Pop.cols =1
+        t1 = Label(text = "Are you sure You want to delete"+t,size_hint =(0.4,0.1),pos_hint ={"x":0.2,"y":0.8},font_size =26,color =(0,1,0,1))
+        self.Pop.add_widget(t1)
+        self.p =GridLayout()
+        self.p.cols=2
+        b1 =Button(text = "YES",size= (100,60),pos_hint={"x":0.2,"y":0.6},width =100,font_size =26,size_hint=(None,None))
+        b2 = Button(text="NO", size=(100,60),pos_hint={"x":0.9,"y":0.6},width =100,font_size =26,size_hint=(None,None))
+        b1.bind(on_press =self.yes)
+        self.p.add_widget(b1)
+        self.p.add_widget(b2)
+        self.Pop.add_widget(self.p)
+        pop = Popup(title="Alert", content=self.Pop, size=(500, 200), size_hint=(None,None))
+        pop.open()
+
+    def yes(self,instance):
+
+        cur.execute("Delete from staff where UserName =?", (self.spi.text,))
+        con.commit()
+        p = Popup(title="Confirmation", content=self.spi.text + "successfully deleted", size=(200, 200), size_hint=(None, None))
+        p.open()
 
     def add(self): #functionality to call popup
         t = self.spi.text
-        d =DeletePop()
 
 
         if t == "Choose Name":
             pop = Popup(title ="Alert", content =Label(text ="Please Choose A Name"),size =(200,200),size_hint =(None,None))
             pop.open()
         else:
-            pop = Popup(content=d, size=(399, 200), size_hint=(None, None))
-            pop.open()
+            pass
 
     def back(self):
         self.u.clear()
-
-class SpinnerOptions(SpinnerOption):
-    pass
-
-
-def show_pop():
-    show = TestCheckbox()
-
-    pop = Popup(content=show,size=(200, 200), size_hint=(None, None))
-    pop.open()
-
-
 
 
 
@@ -229,7 +244,7 @@ kv =Builder.load_file("afsc.kv")
 
 class AFSC(App):
     title = "AFSC ZIMBABWE"
-    de = DeleteStaff()
+    theme_cls = ThemeManager()
     def build(self):
 
         return kv
