@@ -1,4 +1,6 @@
 #:import Factory kivy.factory.Factory
+#:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
+#:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
 Window:
   Main:
   Admin:
@@ -9,11 +11,16 @@ Window:
   RV:
   DeleteStaff:
 
-<SpinnerOptions>
+<SpinnerOptions1@SpinnerOption>
+  font_size:26
+  background_normal:""
+  color:102,255,255,1
+
+<SpinnerOptions@SpinnerOption>
   background_color:1,1,1,1
   font_size:26
   background_normal:""
-  color:0,1,0,1
+  color:0,0,0,1
 <Main>:
   name:"main"
   canvas.before:
@@ -319,7 +326,7 @@ Window:
         multiline:False
 
 
-      Label:
+      MDLabel:
         text:"Password"
         pos_hint:{"x":0.1,"y":0.6}
         size_hint:0.4,0.1
@@ -430,29 +437,38 @@ Window:
         font_size:(root.width**2 + root.height**2)/13**4
         color:0,0,0,1
 
-      TextInput:
-        on_text:
-          root.manager.user.time = self.text
-        size_hint:0.4,0.1
+      MDRoundFlatButton:
+        text:'Calendar'
         pos_hint:{"x":0.4,"y":0.2}
         font_size:(root.width**2 + root.height**2)/13**4
-        hint_text:"dd/mm/yyyy"
+        theme_text_color:"Custom"
+        text_color:0,0,0,1
+        size_hint:0.3,0.1
+        md_bg_color:0,1,0,1
 
-      Button:
+        on_release:
+          root.show_date()
+
+      MDRoundFlatIconButton:
         text:"SUBMIT"
+        icon:"bookmark"
         size_hint:0.3,0.1
         pos_hint:{"x":0.5,"y":0.1}
         font_size:(root.width**2 + root.height**2)/13**4
-        background_color:1,0,1,1
+        md_bg_color:1,1,1,1
+        text_color:1,1,1,1
+        theme_text_color:"Custom"
         on_release:
           root.submit()
 
-      Button:
+      MDRoundFlatButton:
         text:"BACK"
         size_hint:0.3,0.1
         pos_hint:{"x":0.1,"y":0.1}
         font_size:(root.width**2 + root.height**2)/13**4
-        background_color:0,1,0,1
+        md_bg_color:0,0,0,1
+        text_color:1,0,0,1
+        theme_text_color:"Custom"
         on_release:
           app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
           app.root.transition.direction ="left"
@@ -491,25 +507,24 @@ Window:
         multiline:False
 
 
-      Label:
-        text:"Gender"
-        pos_hint:{"x":0.0,"y":0.4}
-        size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:0,0,1,1
+
 
       Spinner:
         id:spi
-        text:"Gender"
+        text:"Click to select gender"
         values:("Male","Female")
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.4,"y":0.4}
+        size_hint:0.6,0.1
+        pos_hint:{"x":0.2,"y":0.4}
         font_size:(root.width**2 + root.height**2)/13**4
+        option_cls:Factory.get("SpinnerOptions1")
+        background_color:1,1,1,1
+        background_normal:''
+        color:102,255,255,1
 
       Button:
         text:"SUBMIT"
         size_hint:0.3,0.1
-        pos_hint:{"x":0.2,"y":0.2}
+        pos_hint:{"x":0.2,"y":0.1}
         font_size:(root.width**2 + root.height**2)/13**4
         background_color:1,0,1,1
         on_release:
@@ -518,7 +533,7 @@ Window:
       Button:
         text:"BACK"
         size_hint:0.3,0.1
-        pos_hint:{"x":0.5,"y":0.2}
+        pos_hint:{"x":0.5,"y":0.1}
         font_size:(root.width**2 + root.height**2)/13**4
         background_color:1,1,0,1
         on_release:
@@ -541,7 +556,7 @@ Window:
         pos_hint:{"x":0.2,"y":0.8}
         source:"afsc.png"
       RecycleView:
-        viewclass: 'Ty'
+        viewclass: 'TaskLayout'
         size_hint:0.4,0.5
         pos_hint:{"x":0.5,"y":0.3}
         data:[{'text': str(x)} for x in root.staff]
@@ -559,6 +574,7 @@ Window:
         font_size:(root.width**2 + root.height**2)/13**4
         size_hint:0.2,0.1
         on_release:
+          root.clear()
           app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
 
 
@@ -601,7 +617,7 @@ Window:
         background_normal:''
         background_color:1,1,1,1
         option_cls:Factory.get("SpinnerOptions")
-        color:0,1,0,1
+        color:0,0,0,1
 
       Button:
         text:"DELETE"
@@ -610,7 +626,7 @@ Window:
         size_hint:0.3,0.1
         background_color:0,0,0,1
         on_release:
-          root.add()
+          root.delete()
 
       Button:
         text:"BACK"
@@ -623,52 +639,12 @@ Window:
           app.root.transition.direction="up"
           app.root.current ="admin"
 
-<DeletePop>
-  canvas.before:
-    Color:
-      rgba:1,1,1,1
-    Rectangle:
-      size:self.size
-      pos:self.pos
-  Label:
-    text:"Do you want to permanantly delete this employee"
-    pos_hint:{"x":0.3,"y":0.6}
-    size_hint:0.4,0.1
-    halign:"center"
-    color:0,0,0,1
-
-  Button:
-    text:"YES"
-    pos_hint:{"x":0.2,"y":0.3}
-    size_hint:0.3,0.2
-    background_color:0,0,1,1
-    on_release:
-      app.de.delete()
-
-  Button:
-    text:"NO"
-    pos_hint:{"x":0.5,"y":0.3}
-    size_hint:0.3,0.2
-    background_color:0,0,1,1
-
-<TestCheckbox>
-  Button:
-    text:"Pending"
-    size_hint:0.4,0.1
-    pos_hint:{"x":0.1,"y":0.6}
-    on_release:
-
-  Button
-    text:"Completed"
-    size_hint:0.4,0.1
-    pos_hint:{"x":0.3,"y":0.6}
-    on_release:
-
-<Ty>
+<TaskLayout>
   font_size:30
   pos_hint:{"x":0.5,"y":0.6}
-  width:300
-  height:100
+  width:100
+
+
 
 
 
