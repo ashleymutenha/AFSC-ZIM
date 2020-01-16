@@ -1,26 +1,63 @@
 #:import Factory kivy.factory.Factory
 #:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
 #:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
+#:import MDRectangleFlatIconButton kivymd.uix.button.MDRectangleFlatIconButton
+#:import MDDropdownMenu kivymd.uix.menu.MDDropdownMenu
+
 Window:
   Main:
   Admin:
-  Tasks:
+  Users:
   AddTask:
   AddStaff:
   SignUp:
   RV:
   DeleteStaff:
+  Surbodinates:
+  NewDate:
+
+
+
+<SpinnerOptions7@SpinnerOption>
+  background_color:1,0,0,1
+  color:1,1,1,1
 
 <SpinnerOptions1@SpinnerOption>
-  font_size:26
+  font_size:22
   background_normal:""
-  color:102,255,255,1
+  background_color:0,1,0,1
+  color:0,0,0,1
 
 <SpinnerOptions@SpinnerOption>
+
+  font_size:22
+  background_normal:""
+  background_color:0,1,1,1
+  color:0,0,0,1
+
+<SpinnerOptions2@SpinnerOption>
   background_color:1,1,1,1
   font_size:26
-  background_normal:""
   color:0,0,0,1
+  background_normal:""
+
+<SpinnerOptions3@SpinnerOption>
+  background_color:1,1,1,1
+  font_size:22
+  color:0,0,0,1
+  background_normal:""
+
+<SpinnerOptions4@SpinnerOption>
+  background_color:1,0,1,1
+  color:1,1,1,1
+
+<SpinnerOptions5@SpinnerOption>
+  background_color:1,1,0,1
+  color:1,1,1,1
+
+<SpinnerOptions6@SpinnerOption>
+  background_color:0,0,0,1
+  color:1,1,1,1
 <Main>:
   name:"main"
   canvas.before:
@@ -36,11 +73,14 @@ Window:
         size_hint:0.5,0.2
         pos_hint:{"x":0.2,"y":0.7}
         source:"afsc.png"
+
+
+
       Label:
         text: "UserName"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.2,"y":0.5}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.1,"y":0.5}
+        font_size:26
         color:0,0,0,1
 
       TextInput:
@@ -48,15 +88,17 @@ Window:
         on_text:
           root.manager.user.usertext = self.text
         size_hint:0.2,0.1
-        pos_hint:{"x": 0.6,"y":0.5}
-        font_size:(root.width**2 + root.height**2)/13**4
-        multiline:False
+        pos_hint:{"x":0.5,"y":0.5}
+        font_size:26
+        background_color:1,1,1,1
+
+
 
       Label:
         text:"Password"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.2, "y":0.3}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.1, "y":0.3}
+        font_size:26
         color:0,0,0,1
 
       TextInput:
@@ -64,46 +106,56 @@ Window:
         on_text:
           root.manager.user.passtext = self.text
         size_hint:0.2,0.1
-        pos_hint:{"x":0.6,"y":0.3}
-        font_size:(root.width**2 + root.height**2)/13**4
-        multiline:False
+        pos_hint:{"x":0.5,"y":0.3}
+        font_size:26
         password:True
 
-      Button:
+
+
+      MDRoundFlatIconButton:
         text:"LOGIN"
+        icon:"login-variant"
         size_hint:0.2,0.1
-        pos_hint:{"x": 0.2, "y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x": 0.1, "y":0.1}
+        font_size:26
         on_release:
           root.manager.transition.direction ="up"
           root.Login()
-        background_color:1,0,1,1
+        md_bg_color:0,1,1,1
+        text_color:0,0,0,1
+        theme_text_color:"Custom"
 
 
-      Button:
+      MDRoundFlatIconButton:
         text:"SIGN UP"
-        pos_hint:{"x":0.6, "y":0.1}
+        icon:"plus"
+        pos_hint:{"x":0.4, "y":0.1}
         size_hint:0.2,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           app.root.transition.direction ="left"
           app.root.current ="signup"
-        background_color:0,0,0,1
+        md_bg_color:0,0,0,1
+        text_color:1,1,1,1
 
-      Button:
+
+      MDRoundFlatIconButton:
         text:"CLEAR"
-        pos_hint:{"x":0.4,"y":0.1}
+        pos_hint:{"x":0.7,"y":0.1}
         size_hint:0.2,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           u.text =""
           p.text =""
+        icon:"delete"
+        md_bg_color:1,0,0,1
+        text_color:1,1,1,1
 
         background_color:1,0,0,1
 
 
-<Tasks>
-  name:"tasks"
+<Users>
+  name:"users"
   canvas.before:
     Color:
       rgba:1,1,1,1
@@ -114,63 +166,81 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.4,0.1
-        pos_hint:{"x":0.2,"y":0.9}
+        size_hint:0.5,0.3
+        pos_hint:{"x":0.2,"y":0.7}
         source:"afsc.png"
+
+      Label:
+        text:root.manager.user.notification
+        size_hint:0.4,0.1
+        pos_hint:{"x":0.6,"y":0.8}
+        font_size:26
+        color:1,0,0,1
+        on_touch_down:
 
       Label:
         text:"Welcome"
         size_hint:0.4,0.1
-        pos_hint:{"x":0.1,"y":0.8}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.0,"y":0.8}
+        font_size:26
         color:0.41, 0.42, 0.74, 1
+
 
       Label:
         text: root.manager.user.usertext
         size_hint:0.4,0.1
-        pos_hint:{"x":0.1, "y":0.7}
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:0,0,1,1
+        pos_hint:{"x":0.0, "y":0.7}
+        font_size:26
+        color:0.41,0.42 ,0.74,1
 
-      Button:
+      MDRoundFlatIconButton:
+        icon:"eye"
         size_hint:0.3,0.1
         pos_hint:{"x":0.1,"y":0.5}
         text:"View Tasks"
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           app.root.transition.direction ="left"
           app.root.current ="view"
-        background_color:0,1,0,1
+        md_bg_color:0,1,0,1
+        text_color:0,0,0,1
 
 
 
-      Button:
+      MDRoundFlatIconButton:
+        icon:"plus-circle"
         size_hint:0.3,0.1
         pos_hint:{"x":0.6,"y":0.5}
         text:"Add Tasks"
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           app.root.transition.direction ="right"
           app.root.current = "addt"
-        background_color:1,0,1,1
+        md_bg_color:1,0,1,1
+        text_color:0,0,0,1
 
 
-      Button:
+      MDRoundFlatIconButton:
+        icon:"logout-variant"
         size_hint:0.3,0.1
         pos_hint:{"x":0.1,"y":0.3}
-        text:"LOG OFF"
-        font_size:(root.width**2 + root.height**2)/13**4
+        text:"LOG OUT"
+        font_size:26
         on_release:
           app.root.transition.direction ="down"
           app.root.current ="main"
-        background_color:0,0,1,1
+        md_bg_color:0,0,1,1
+        text_color:1,1,1,1
 
-      Button:
+      MDRoundFlatIconButton:
+        text:"Refresh"
+        icon:"refresh"
+        md_bg_color:0,1,1,1
+        pos_hint:{"x":0.6,"y":0.3}
         size_hint:0.3,0.1
-        pos_hint:{"x":0.6,"y":0.9}
-        text:"FY Schedule"
-        font_size:(root.width**2 + root.height**2)/13**4
-        background_color:(0,1,0,1)
+        font_size:26
+        text_color:0,0,0,1
+
 
 <Admin>
   name:"admin"
@@ -188,17 +258,24 @@ Window:
         text:"Welcome Admin"
         pos_hint:{"x":0.0,"y":0.8}
         size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:1,0,1,1
+        font_size:26
+        color:1,0,0,1
       Label:
         text:root.manager.user.usertext
         pos_hint:{"x":0.0,"y":0.7}
         size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:1,0,1,1
+        font_size:26
+        color:1,0,0,1
+
+      Label:
+        text:root.manager.user.notification
+        pos_hint:{"x":0.6,"y":0.7}
+        size_hint:0.4,0.1
+        font_size:26
+        color:1,0,0,1
       Image:
         size_hint:0.5,0.2
-        pos_hint:{"x":0.4,"y":0.7}
+        pos_hint:{"x":0.2,"y":0.7}
         source:"afsc.png"
       TabbedPanel:
         do_default_tab: False
@@ -211,7 +288,7 @@ Window:
         TabbedPanelItem:
           text:"Organisational"
           background_color:1,0,1,1
-          font_size:(root.width**2 + root.height**2)/13**4
+          font_size:26
           size_hint:0.5,0.3
           GridLayout:
             cols:1
@@ -220,29 +297,38 @@ Window:
               orientation:"vertical"
               Button:
                 text:"Add Staff"
-                size_hint:0.4,0.1
+                size_hint:0.5,0.1
                 on_release:
                   app.root.current="adds"
                   app.root.transition.direction ="down"
                 pos_hint:
                   {"x":0.1,"y":0.9}
                 background_color:1,0,1,1
-                font_size:(root.width**2 + root.height**2)/13**4
+                font_size:26
 
               Button:
                 text:"Delete Staff"
-                size_hint:0.4,0.1
+                size_hint:0.5,0.1
                 on_release:
                   app.root.current="delete"
                   app.root.transition.direction ="down"
                 pos_hint:{"x":0.1,"y":0.8}
                 background_color:1,0,1,1
-                font_size:(root.width**2 + root.height**2)/13**4
+                font_size:26
+              Button:
+                text:"Surbodinates"
+                size_hint:0.5,0.1
+                pos_hint:{"x":0.1,"y":0.6}
+                background_color:1,0,1,1
+                font_size:26
+                on_release:
+                  app.root.current ="sur"
+                  app.root.transition.direction = "up"
 
 
         TabbedPanelItem:
           text:"Personal"
-          font_size:(root.width**2 + root.height**2)/13**4
+          font_size:26
           background_color:1,0,1,1
 
           size_hint:0.4,0.3
@@ -251,31 +337,35 @@ Window:
             spacing:2
             Button:
               text:"Add Task"
-              size_hint:0.3,0.1
+              size_hint:0.5,0.1
               on_release:
                 app.root.current="addt"
                 app.root.transition.direction ="down"
               pos_hint:{"x":0.6,"y":0.8}
               size_hint:0.4,0.1
-              font_size:(root.width**2 + root.height**2)/13**4
+              font_size:26
               background_color:1,0,1,1
 
             Button:
               text:"View Tasks"
-              size_hint:0.3,0.1
+              size_hint:0.5,0.1
               on_release:
                 app.root.current="view"
                 app.root.transition.direction ="down"
               pos_hint:{"x":0.6,"y":0.7}
               size_hint:0.4,0.1
-              font_size:(root.width**2 + root.height**2)/13**4
+              font_size:26
               background_color:1,0,1,1
-      Button:
+      MDRectangleFlatIconButton:
         text:"BACK"
+        icon:"arrow-left"
         size_hint:0.3,0.1
         pos_hint:{"x":0.2,"y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
-        background_color:0,1,0,1
+        font_size:26
+        md_bg_color:0,0,0,1
+        text_color:1,1,1,1
+        theme_text_color:"Custom"
+
         on_release:
           app.root.current = "main"
           app.root.transition.direction = "down"
@@ -306,83 +396,90 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.4,0.1
-        pos_hint:{"x":0.1,"y":0.9}
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.1,"y":0.8}
         source:"afsc.png"
 
       Label:
         text:"UserName"
-        pos_hint:{"x":0.1,"y":0.8}
+        pos_hint:{"x":0.1,"y":0.7}
         size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         color:0,0,0,1
 
 
       TextInput:
         id:user
-        pos_hint:{"x":0.5, "y":0.8}
-        size_hint:0.3,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.5, "y":0.7}
+        size_hint:0.2,0.1
+        font_size:26
         multiline:False
 
 
-      MDLabel:
+      Label:
         text:"Password"
-        pos_hint:{"x":0.1,"y":0.6}
+        pos_hint:{"x":0.1,"y":0.5}
         size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         color:0,0,0,1
 
       TextInput:
         id:pass1
-        pos_hint:{"x":0.5, "y":0.6}
-        size_hint:0.3,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.5, "y":0.5}
+        size_hint:0.2,0.1
+        font_size:26
         multiline:False
         password:True
 
       Label:
         text:"Password Again"
-        pos_hint:{"x":0.1,"y":0.4}
+        pos_hint:{"x":0.1,"y":0.3}
         size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         color:0,0,0,1
 
       TextInput:
         id:pass2
-        pos_hint:{"x":0.5, "y":0.4}
-        size_hint:0.3,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.5, "y":0.3}
+        size_hint:0.2,0.1
+        font_size:26
         multiline:False
         password:True
 
-      Button:
+      MDRoundFlatIconButton:
         text: "SUBMIT"
         pos_hint:{"x": 0.3, "y": 0.2}
         size_hint:0.2,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           root.submit()
-        background_color:0,0,0,1
+        md_bg_color:0,0,0,1
+        text_color:1,1,1,1
+        icon:"marker-check"
 
-      Button:
+      MDRoundFlatIconButton:
         text:"LOGIN"
         pos_hint:{"x":0.5,"y":0.2}
         size_hint:0.2,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           app.root.transition.direction ="right"
           app.root.current ="main"
-        background_color:1,0,1,1
+        md_bg_color:1,0,1,1
+        text_color:1,1,1,1
+        icon:"login-variant"
 
-      Button:
+
+      MDRoundFlatIconButton:
         text:"CLEAR"
         pos_hint:{"x":0.7,"y":0.2}
         size_hint:0.2,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         on_release:
           root.clear()
-        background_color:1,0,0,1
+        md_bg_color:1,0,0,1
+        icon:"delete"
+        text_color:1,1,1,1
 
 
 
@@ -406,139 +503,190 @@ Window:
         text:"TaskName"
         size_hint:0.4,0.1
         pos_hint:{"x":0.0,"y":0.6}
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
         color:0,0,0,1
 
       TextInput:
+        id:taskNm
         on_text:
           root.manager.user.taskName = self.text
         size_hint:0.4,0.1
         pos_hint:{"x":0.4,"y":0.6}
-        font_size:(root.width**2 + root.height**2)/13**4
+        font_size:26
+
 
       Label:
         text:"TaskDescription"
         size_hint:0.4,0.1
-        pos_hint:{"x":0.0,"y":0.4}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.0,"y":0.3}
+        font_size:26
         color:0,0,0,1
+
 
       TextInput:
+        id:taskdsr
         on_text:
-          root.manager.user.taskd =self.text
-        size_hint:0.4,0.1
-        pos_hint:{"x":0.4,"y":0.4}
-        font_size:(root.width**2 + root.height**2)/13**4
+          root.manager.user.taskdsc =self.text
+        size_hint:0.4,0.2
+        pos_hint:{"x":0.4,"y":0.3}
+        font_size:26
+        multipleline:True
 
-      Label:
-        text:"DeadLine"
-        size_hint:0.4,0.1
-        pos_hint:{"x":0.0,"y":0.2}
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:0,0,0,1
 
-      MDRoundFlatButton:
+
+      MDRoundFlatIconButton:
         text:'Calendar'
-        pos_hint:{"x":0.4,"y":0.2}
-        font_size:(root.width**2 + root.height**2)/13**4
+        icon:"calendar"
+        pos_hint:{"x":0.1,"y":0.1}
+        font_size:26
         theme_text_color:"Custom"
-        text_color:0,0,0,1
-        size_hint:0.3,0.1
-        md_bg_color:0,1,0,1
+        text_color:1,1,1,1
+        size_hint:0.2,0.1
+        md_bg_color:0,0,0,1
+        icon_bg_color:1,1,1,1
 
         on_release:
           root.show_date()
 
+      TextInput:
+        id:cale
+        font_size:26
+        pos_hint:{"x":0.4,"y":0.1}
+        size_hint:0.2,0.1
+
       MDRoundFlatIconButton:
-        text:"SUBMIT"
-        icon:"bookmark"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.5,"y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
-        md_bg_color:1,1,1,1
+        text:"Clear"
+        icon:'delete-sweep'
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.7,"y":0.1}
+        font_size:26
+        md_bg_color:0,1,0,1
+        text_color:0,0,0,1
+        theme_text_color:"Custom"
+        on_release:
+          root.clear()
+        border_color:1,0,0,1
+
+
+      MDRoundFlatIconButton:
+        icon:'marker-check'
+        size_hint:0.1,0.1
+        pos_hint:{"x":0.9,"y":0.6}
+        font_size:26
+        md_bg_color:0,0,1,1
         text_color:1,1,1,1
         theme_text_color:"Custom"
         on_release:
           root.submit()
+        border_color:1,0,0,1
 
-      MDRoundFlatButton:
-        text:"BACK"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.1,"y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
+      MDRoundFlatIconButton:
+        icon:"arrow-left"
+        size_hint:0.1,0.1
+        pos_hint:{"x":0.9,"y":0.3}
+        font_size:26
         md_bg_color:0,0,0,1
-        text_color:1,0,0,1
+        text_color:1,1,1,1
         theme_text_color:"Custom"
         on_release:
-          app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
+          root.position()
+          app.root.current ="admin" if root.manager.user.position =="Admin" else "users"
           app.root.transition.direction ="left"
 
 
 
 <AddStaff>
   name:"adds"
-  spi:spi
-  nam:nam
   canvas.before:
     Color:
       rgba:1,1,1,1
     Rectangle:
       size:self.size
-      pos: self.pos
+      pos:self.pos
   GridLayout:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.4,0.2
-        pos_hint:{"x":0.3,"y":0.8}
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.1,"y":0.8}
         source:"afsc.png"
-      Label:
-        text: "Name"
-        pos_hint:{"x":0.0,"y":0.6}
-        size_hint:0.4,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
-        color:0,0,1,1
+
 
       TextInput:
-        id:nam
-        pos_hint:{"x":0.4,"y":0.6}
-        size_hint:0.3,0.1
-        font_size:(root.width**2 + root.height**2)/13**4
-        multiline:False
-
-
-
+        id:name
+        hint_text:"INITIALS"
+        pos_hint:{"x":0.3,"y":0.5}
+        size_hint:0.2,0.1
+        color:0,0,0,1
+        font_size:26
 
       Spinner:
-        id:spi
-        text:"Click to select gender"
-        values:("Male","Female")
-        size_hint:0.6,0.1
-        pos_hint:{"x":0.2,"y":0.4}
-        font_size:(root.width**2 + root.height**2)/13**4
-        option_cls:Factory.get("SpinnerOptions1")
-        background_color:1,1,1,1
-        background_normal:''
-        color:102,255,255,1
-
-      Button:
-        text:"SUBMIT"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.2,"y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
+        id:department
+        text:"Department"
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.3,"y":0.3}
+        values:{'PO','FA','CR','MEAL'}
         background_color:1,0,1,1
-        on_release:
-          root.add()
+        option_cls:Factory.get("SpinnerOptions4")
+        font_size:26
 
-      Button:
-        text:"BACK"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.5,"y":0.1}
-        font_size:(root.width**2 + root.height**2)/13**4
+      Spinner:
+        id:role
+        text:"Role"
+        pos_hint:{"x":0.6,"y":0.5}
+        values:{"Supervisor","Employee","Intern"}
         background_color:1,1,0,1
-        on_release:
-          app.root.current ="admin"
+        size_hint:0.2,0.1
+        option_cls:Factory.get("SpinnerOptions5")
+        font_size:26
 
+      Spinner:
+        id:gender
+        text:"Gender"
+        values:{'Male','Female'}
+        option_cls:Factory.get("SpinnerOptions6")
+        background_color:0,0,0,1
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.3,"y":0.1}
+        font_size:26
+
+      Spinner:
+        id:supervisor
+        text:"Supervisor"
+        background_color:1,0,0,1
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.6,"y":0.3}
+        values:root.supervisor
+        option_cls:Factory.get("SpinnerOptions7")
+        font_size:26
+
+
+
+
+      FloatLayout:
+        pos_hint:{"x":0.0,"y":0.3}
+        orientation:"vertical"
+        MDRoundFlatIconButton:
+          icon:"folder"
+          md_bg_color:0,1,1,1
+          text_color:0,0,0,1
+
+          size:100,59
+          pos_hint:{"x":0.1,"y":0.2}
+          on_release:
+            root.add()
+
+
+        MDRoundFlatIconButton:
+          icon:"arrow-left"
+          size:100,59
+          md_bg_color:1,0,0,1
+          text_color:0,0,0,1
+          on_release:
+            root.back()
+
+
+          pos_hint:{"x":0.1,"y":0.0}
 
 <RV>:
   name:"view"
@@ -561,7 +709,7 @@ Window:
         pos_hint:{"x":0.5,"y":0.3}
         data:[{'text': str(x)} for x in root.staff]
         RecycleBoxLayout:
-          default_size: None, dp(56)
+          default_size: None, dp(50)
           default_size_hint: 1, None
           orientation: 'vertical'
           multiselect:False
@@ -570,12 +718,34 @@ Window:
           height: self.minimum_height
       Button:
         text:"BACK"
-        pos_hint:{"x":0.0,"y":0.2}
-        font_size:(root.width**2 + root.height**2)/13**4
+        pos_hint:{"x":0.1,"y":0.1}
+        font_size:26
         size_hint:0.2,0.1
         on_release:
           root.clear()
-          app.root.current ="admin" if root.manager.user.usertext =="ZOT" else "tasks"
+          root.position()
+          app.root.current ="admin" if root.manager.user.position =="Admin" else "users"
+      Button:
+        text:"Refresh"
+        pos_hint:{"x":0.1,"y":0.3}
+        font_size:26
+        background_color:0,1,0,1
+        size_hint:0.2,0.1
+        on_release:
+          root.refresh()
+      Label:
+        text:"Tasks Pending"
+        pos_hint:{"x":0.1,"y":0.6}
+        font_size:26
+        size_hint:0.2,0.1
+        color:1,0,0,1
+
+      Label:
+        text:root.manager.user.pending
+        pos_hint:{"x":0.1,"y":0.5}
+        font_size:26
+        size_hint:0.2,0.1
+        color:0,0,0,1
 
 
 
@@ -616,7 +786,7 @@ Window:
         font_size:26
         background_normal:''
         background_color:1,1,1,1
-        option_cls:Factory.get("SpinnerOptions")
+        option_cls:Factory.get("SpinnerOptions2")
         color:0,0,0,1
 
       Button:
@@ -638,13 +808,53 @@ Window:
           root.back()
           app.root.transition.direction="up"
           app.root.current ="admin"
-
 <TaskLayout>
-  font_size:30
-  pos_hint:{"x":0.5,"y":0.6}
-  width:100
+  btn:btn
+  id:btn
 
+<Surbodinates>
+  name:"sur"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      pos:self.pos
+      size:self.size
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Image:
+        size_hint:0.5,0.2
+        pos_hint:{"x":0.2,"y":0.8}
+        source:"afsc.png"
+      RecycleView:
+        viewclass: 'SurbodinatesList'
+        size_hint:0.4,0.5
+        pos_hint:{"x":0.5,"y":0.3}
+        data:[{'text': str(x)} for x in root.surbodinates]
+        RecycleBoxLayout:
+          default_size: None, dp(50)
+          default_size_hint: 1, None
+          orientation: 'vertical'
+          multiselect:False
+          touch_multiselect: False
+          size_hint_y: None
+          height: self.minimum_height
 
-
-
-
+<NewDate>
+  name:"new"
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  GridLayout:
+    cols:2
+    FloatLayout:
+      Button:
+        text:"Set New Date"
+        font_size:26
+        background_color:1,0,0,1
+        on_release:
+          root.show_date
