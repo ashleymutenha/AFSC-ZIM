@@ -3,6 +3,7 @@
 #:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
 #:import MDRectangleFlatIconButton kivymd.uix.button.MDRectangleFlatIconButton
 #:import MDDropdownMenu kivymd.uix.menu.MDDropdownMenu
+#: import icon kivy.garden.iconfonts.icon
 
 Window:
   Main:
@@ -13,27 +14,23 @@ Window:
   SignUp:
   RV:
   DeleteStaff:
-  Surbodinates:
-  NewDate:
+
+
+
+
 
 
 
 <SpinnerOptions7@SpinnerOption>
   background_color:1,0,0,1
   color:1,1,1,1
+  font_size:26
 
 <SpinnerOptions1@SpinnerOption>
-  font_size:22
-  background_normal:""
-  background_color:0,1,0,1
-  color:0,0,0,1
+  font_size:26
+  background_color:0,0,0,1
+  color:1,1,1,1
 
-<SpinnerOptions@SpinnerOption>
-
-  font_size:22
-  background_normal:""
-  background_color:0,1,1,1
-  color:0,0,0,1
 
 <SpinnerOptions2@SpinnerOption>
   background_color:1,1,1,1
@@ -42,22 +39,16 @@ Window:
   background_normal:""
 
 <SpinnerOptions3@SpinnerOption>
-  background_color:1,1,1,1
-  font_size:22
-  color:0,0,0,1
-  background_normal:""
-
-<SpinnerOptions4@SpinnerOption>
   background_color:1,0,1,1
+  font_size:26
   color:1,1,1,1
 
-<SpinnerOptions5@SpinnerOption>
-  background_color:1,1,0,1
-  color:1,1,1,1
 
-<SpinnerOptions6@SpinnerOption>
-  background_color:0,0,0,1
-  color:1,1,1,1
+
+
+
+
+
 <Main>:
   name:"main"
   canvas.before:
@@ -70,16 +61,18 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.5,0.2
-        pos_hint:{"x":0.2,"y":0.7}
+        size_hint:0.5,0.3
+        pos_hint:{"x":0.26,"y":0.7}
         source:"afsc.png"
+
+
 
 
 
       Label:
         text: "UserName"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.1,"y":0.5}
+        pos_hint:{"x":0.2,"y":0.54}
         font_size:26
         color:0,0,0,1
 
@@ -88,7 +81,7 @@ Window:
         on_text:
           root.manager.user.usertext = self.text
         size_hint:0.2,0.1
-        pos_hint:{"x":0.5,"y":0.5}
+        pos_hint:{"x":0.6,"y":0.54}
         font_size:26
         background_color:1,1,1,1
 
@@ -97,7 +90,7 @@ Window:
       Label:
         text:"Password"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.1, "y":0.3}
+        pos_hint:{"x":0.2, "y":0.34}
         font_size:26
         color:0,0,0,1
 
@@ -106,7 +99,7 @@ Window:
         on_text:
           root.manager.user.passtext = self.text
         size_hint:0.2,0.1
-        pos_hint:{"x":0.5,"y":0.3}
+        pos_hint:{"x":0.6,"y":0.34}
         font_size:26
         password:True
 
@@ -124,11 +117,12 @@ Window:
         md_bg_color:0,1,1,1
         text_color:0,0,0,1
         theme_text_color:"Custom"
+        markup:True
 
 
       MDRoundFlatIconButton:
         text:"SIGN UP"
-        icon:"plus"
+        icon:"plus-circle-multiple-outline"
         pos_hint:{"x":0.4, "y":0.1}
         size_hint:0.2,0.1
         font_size:26
@@ -137,6 +131,7 @@ Window:
           app.root.current ="signup"
         md_bg_color:0,0,0,1
         text_color:1,1,1,1
+        markup:True
 
 
       MDRoundFlatIconButton:
@@ -150,7 +145,7 @@ Window:
         icon:"delete"
         md_bg_color:1,0,0,1
         text_color:1,1,1,1
-
+        markup:True
         background_color:1,0,0,1
 
 
@@ -170,13 +165,16 @@ Window:
         pos_hint:{"x":0.2,"y":0.7}
         source:"afsc.png"
 
-      Label:
-        text:root.manager.user.notification
+
+      MDRoundFlatIconButton:
+        icon:"bell-ring"
         size_hint:0.4,0.1
-        pos_hint:{"x":0.6,"y":0.8}
-        font_size:26
+        pos_hint:{"x":0.7,"y":0.8}
         color:1,0,0,1
-        on_touch_down:
+        text:"Notifications"
+        md_bg_color:1,1,1,1
+        text_color:1,0,0,1
+        font_size:26
 
       Label:
         text:"Welcome"
@@ -193,54 +191,93 @@ Window:
         font_size:26
         color:0.41,0.42 ,0.74,1
 
+      TabbedPanel:
+        do_default_tab: False
+        tab_width: root.width / 3
+        background_color:102,255,255,1
+        border:[0,0,0,0]
+        pos_hint:{"x":0.2,"y":0.3}
+        size_hint:0.6,0.3
+
+        TabbedPanelItem:
+          text:"Departmental"
+          background_color:0,0,0,1
+          color:1,1,1,1
+          font_size:26
+          size_hint:0.5,0.3
+          GridLayout:
+            cols:1
+            BoxLayout:
+              spacing:2
+              orientation:"vertical"
+              MDRectangleFlatIconButton:
+                text:"Supervision"
+                icon:"human"
+                size_hint:0.5,0.1
+                on_release:
+                pos_hint:{"x":0.1,"y":0.9}
+                md_bg_color:0,0,0,1
+                text_color:1,1,1,1
+                font_size:26
+                on_release:
+                  root.supervise()
+
+              MDRectangleFlatIconButton:
+                text:"Past Records"
+                icon:"file"
+                size_hint:0.5,0.1
+                on_release:
+                pos_hint:{"x":0.1,"y":0.8}
+                md_bg_color:0,0,0,1
+                text_color:1,1,1,1
+                font_size:26
+
+        TabbedPanelItem:
+          text:"Individual"
+          background_color:0,0,0,1
+          color:1,1,1,1
+          font_size:26
+          size_hint:0.5,0.3
+          GridLayout:
+            cols:1
+            BoxLayout:
+              spacing:2
+              orientation: "vertical"
+              MDRectangleFlatIconButton:
+                text:"View Tasks"
+                icon:"eye"
+                pos_hint:{"x":0.6,"y":0.9}
+                size_hint:0.5,0.1
+                md_bg_color:0,0,0,1
+                text_color:1,1,1,1
+                font_size:26
+                on_release:
+                  app.root.current ="view"
+                  app.root.transition.direction = "up"
+
+              MDRectangleFlatIconButton:
+                text:"Add Tasks"
+                icon:"plus-circle"
+                pos_hint:{"x":0.6,"y":0.8}
+                size_hint:0.5,0.1
+                md_bg_color:0,0,0,1
+                text_color:1,1,1,1
+                font_size:26
+                on_release:
+                  app.root.current = "addt"
+                  app.root.transition.direction = "right"
+
       MDRoundFlatIconButton:
-        icon:"eye"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.1,"y":0.5}
-        text:"View Tasks"
-        font_size:26
-        on_release:
-          app.root.transition.direction ="left"
-          app.root.current ="view"
-        md_bg_color:0,1,0,1
-        text_color:0,0,0,1
-
-
-
-      MDRoundFlatIconButton:
-        icon:"plus-circle"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.6,"y":0.5}
-        text:"Add Tasks"
-        font_size:26
-        on_release:
-          app.root.transition.direction ="right"
-          app.root.current = "addt"
-        md_bg_color:1,0,1,1
-        text_color:0,0,0,1
-
-
-      MDRoundFlatIconButton:
-        icon:"logout-variant"
-        size_hint:0.3,0.1
-        pos_hint:{"x":0.1,"y":0.3}
-        text:"LOG OUT"
-        font_size:26
-        on_release:
-          app.root.transition.direction ="down"
-          app.root.current ="main"
-        md_bg_color:0,0,1,1
+        text:"BACK"
+        icon:"arrow-left"
+        pos_hint:{"x":0.2,"y":0.1}
+        size_hint:0.2,0.1
+        md_bg_color:0,0,0,1
         text_color:1,1,1,1
-
-      MDRoundFlatIconButton:
-        text:"Refresh"
-        icon:"refresh"
-        md_bg_color:0,1,1,1
-        pos_hint:{"x":0.6,"y":0.3}
-        size_hint:0.3,0.1
         font_size:26
-        text_color:0,0,0,1
-
+        on_release:
+          app.root.current ="main"
+          app.root.transition.direction = "left"
 
 <Admin>
   name:"admin"
@@ -259,20 +296,25 @@ Window:
         pos_hint:{"x":0.0,"y":0.8}
         size_hint:0.4,0.1
         font_size:26
-        color:1,0,0,1
+        color:0,0,1,1
       Label:
         text:root.manager.user.usertext
         pos_hint:{"x":0.0,"y":0.7}
         size_hint:0.4,0.1
         font_size:26
-        color:1,0,0,1
+        color:0,0,1,1
 
-      Label:
-        text:root.manager.user.notification
-        pos_hint:{"x":0.6,"y":0.7}
+      MDRoundFlatIconButton:
+        text:"Notifications"
+        pos_hint:{"x":0.7,"y":0.8}
         size_hint:0.4,0.1
         font_size:26
-        color:1,0,0,1
+        md_bg_color:1,1,1,1
+        on_press:
+          root.open()
+        icon:"bell"
+        text_color:1,0,0,1
+
       Image:
         size_hint:0.5,0.2
         pos_hint:{"x":0.2,"y":0.7}
@@ -301,8 +343,7 @@ Window:
                 on_release:
                   app.root.current="adds"
                   app.root.transition.direction ="down"
-                pos_hint:
-                  {"x":0.1,"y":0.9}
+                pos_hint:{"x":0.1,"y":0.9}
                 background_color:1,0,1,1
                 font_size:26
 
@@ -315,14 +356,15 @@ Window:
                 pos_hint:{"x":0.1,"y":0.8}
                 background_color:1,0,1,1
                 font_size:26
+                color:1,1,1,1
               Button:
-                text:"Surbodinates"
+                text:"Supervision"
                 size_hint:0.5,0.1
                 pos_hint:{"x":0.1,"y":0.6}
                 background_color:1,0,1,1
                 font_size:26
                 on_release:
-                  app.root.current ="sur"
+                  app.root.current ="supervision"
                   app.root.transition.direction = "up"
 
 
@@ -371,16 +413,6 @@ Window:
           app.root.transition.direction = "down"
 
 
-
-
-
-
-
-
-
-
-
-
 <SignUp>
   name:"signup"
   user:user
@@ -396,13 +428,13 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.5,0.2
-        pos_hint:{"x":0.1,"y":0.8}
+        size_hint:0.4,0.2
+        pos_hint:{"x":0.3,"y":0.8}
         source:"afsc.png"
 
       Label:
         text:"UserName"
-        pos_hint:{"x":0.1,"y":0.7}
+        pos_hint:{"x":0.0,"y":0.6}
         size_hint:0.4,0.1
         font_size:26
         color:0,0,0,1
@@ -410,7 +442,7 @@ Window:
 
       TextInput:
         id:user
-        pos_hint:{"x":0.5, "y":0.7}
+        pos_hint:{"x":0.4, "y":0.6}
         size_hint:0.2,0.1
         font_size:26
         multiline:False
@@ -418,14 +450,14 @@ Window:
 
       Label:
         text:"Password"
-        pos_hint:{"x":0.1,"y":0.5}
+        pos_hint:{"x":0.0,"y":0.4}
         size_hint:0.4,0.1
         font_size:26
         color:0,0,0,1
 
       TextInput:
         id:pass1
-        pos_hint:{"x":0.5, "y":0.5}
+        pos_hint:{"x":0.4, "y":0.4}
         size_hint:0.2,0.1
         font_size:26
         multiline:False
@@ -433,14 +465,14 @@ Window:
 
       Label:
         text:"Password Again"
-        pos_hint:{"x":0.1,"y":0.3}
+        pos_hint:{"x":0.0,"y":0.2}
         size_hint:0.4,0.1
         font_size:26
         color:0,0,0,1
 
       TextInput:
         id:pass2
-        pos_hint:{"x":0.5, "y":0.3}
+        pos_hint:{"x":0.4, "y":0.2}
         size_hint:0.2,0.1
         font_size:26
         multiline:False
@@ -448,7 +480,7 @@ Window:
 
       MDRoundFlatIconButton:
         text: "SUBMIT"
-        pos_hint:{"x": 0.3, "y": 0.2}
+        pos_hint:{"x": 0.7, "y": 0.6}
         size_hint:0.2,0.1
         font_size:26
         on_release:
@@ -459,14 +491,14 @@ Window:
 
       MDRoundFlatIconButton:
         text:"LOGIN"
-        pos_hint:{"x":0.5,"y":0.2}
+        pos_hint:{"x":0.7,"y":0.4}
         size_hint:0.2,0.1
         font_size:26
         on_release:
           app.root.transition.direction ="right"
           app.root.current ="main"
-        md_bg_color:1,0,1,1
-        text_color:1,1,1,1
+        md_bg_color:0,1,1,1
+        text_color:0,0,0,1
         icon:"login-variant"
 
 
@@ -502,7 +534,7 @@ Window:
       Label:
         text:"TaskName"
         size_hint:0.4,0.1
-        pos_hint:{"x":0.0,"y":0.6}
+        pos_hint:{"x":0.0,"y":0.7}
         font_size:26
         color:0,0,0,1
 
@@ -511,14 +543,14 @@ Window:
         on_text:
           root.manager.user.taskName = self.text
         size_hint:0.4,0.1
-        pos_hint:{"x":0.4,"y":0.6}
+        pos_hint:{"x":0.4,"y":0.7}
         font_size:26
 
 
       Label:
-        text:"TaskDescription"
+        text:"Description"
         size_hint:0.4,0.1
-        pos_hint:{"x":0.0,"y":0.3}
+        pos_hint:{"x":0.0,"y":0.4}
         font_size:26
         color:0,0,0,1
 
@@ -528,16 +560,14 @@ Window:
         on_text:
           root.manager.user.taskdsc =self.text
         size_hint:0.4,0.2
-        pos_hint:{"x":0.4,"y":0.3}
+        pos_hint:{"x":0.4,"y":0.4}
         font_size:26
         multipleline:True
-
-
 
       MDRoundFlatIconButton:
         text:'Calendar'
         icon:"calendar"
-        pos_hint:{"x":0.1,"y":0.1}
+        pos_hint:{"x":0.1,"y":0.2}
         font_size:26
         theme_text_color:"Custom"
         text_color:1,1,1,1
@@ -551,14 +581,14 @@ Window:
       TextInput:
         id:cale
         font_size:26
-        pos_hint:{"x":0.4,"y":0.1}
+        pos_hint:{"x":0.4,"y":0.2}
         size_hint:0.2,0.1
 
       MDRoundFlatIconButton:
         text:"Clear"
         icon:'delete-sweep'
         size_hint:0.2,0.1
-        pos_hint:{"x":0.7,"y":0.1}
+        pos_hint:{"x":0.7,"y":0.2}
         font_size:26
         md_bg_color:0,1,0,1
         text_color:0,0,0,1
@@ -569,21 +599,23 @@ Window:
 
 
       MDRoundFlatIconButton:
+        text:"SAVE"
         icon:'marker-check'
-        size_hint:0.1,0.1
-        pos_hint:{"x":0.9,"y":0.6}
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.1,"y":0.0}
         font_size:26
-        md_bg_color:0,0,1,1
-        text_color:1,1,1,1
+        md_bg_color:0,1,1,1
+        text_color:0,0,0,1
         theme_text_color:"Custom"
         on_release:
           root.submit()
         border_color:1,0,0,1
 
       MDRoundFlatIconButton:
+        text:"BACK"
         icon:"arrow-left"
-        size_hint:0.1,0.1
-        pos_hint:{"x":0.9,"y":0.3}
+        size_hint:0.2,0.1 
+        pos_hint:{"x":0.5,"y":0.0}
         font_size:26
         md_bg_color:0,0,0,1
         text_color:1,1,1,1
@@ -596,6 +628,7 @@ Window:
 
 
 <AddStaff>
+  nm:nm
   name:"adds"
   canvas.before:
     Color:
@@ -611,82 +644,127 @@ Window:
         pos_hint:{"x":0.1,"y":0.8}
         source:"afsc.png"
 
+      Label:
+        text:"Name"
+        font_size:26
+        pos_hint:{"x":0.1,"y":0.6}
+        font_size:26
+        size_hint:0.2,0.1
+        color:0,0,0,1
+
+
 
       TextInput:
-        id:name
+        id:nm
         hint_text:"INITIALS"
-        pos_hint:{"x":0.3,"y":0.5}
+        pos_hint:{"x":0.4,"y":0.6}
         size_hint:0.2,0.1
         color:0,0,0,1
         font_size:26
 
+
+
       Spinner:
         id:department
         text:"Department"
+        values:['FA','CR','PO','MEAL']
+        pos_hint:{"x":0.7,"y":0.6}
         size_hint:0.2,0.1
-        pos_hint:{"x":0.3,"y":0.3}
-        values:{'PO','FA','CR','MEAL'}
-        background_color:1,0,1,1
-        option_cls:Factory.get("SpinnerOptions4")
         font_size:26
+        background_color:1,0,1,1
+        color:1,1,1,1
+        option_cls:Factory.get("SpinnerOptions3")
+        on_text:
+          root.dept()
+
 
       Spinner:
         id:role
         text:"Role"
-        pos_hint:{"x":0.6,"y":0.5}
-        values:{"Supervisor","Employee","Intern"}
-        background_color:1,1,0,1
+        values:{'Admin','Employee'}
+        pos_hint:{"x":0.7,"y":0.1}
         size_hint:0.2,0.1
-        option_cls:Factory.get("SpinnerOptions5")
         font_size:26
-
-      Spinner:
-        id:gender
-        text:"Gender"
-        values:{'Male','Female'}
-        option_cls:Factory.get("SpinnerOptions6")
         background_color:0,0,0,1
+        color:1,1,1,1
+        option_cls:Factory.get("SpinnerOptions1")
+
+
+      Label:
+        text:"Supervision"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.3,"y":0.1}
+        pos_hint:{"x":0.1,"y":0.4}
         font_size:26
+        color:0,0,0,1
+
+      Label:
+        text:"Yes"
+        color:0,0,1,1
+        font_size:26
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.3,"y":0.4}
+
+      Label:
+        text:"No"
+        color:1,0,0,1
+        font_size:26
+        size_hint:0.2,0.1
+        pos_hint:{"x":0.3,"y":0.3}
+
+      CheckBox:
+        group:"check"
+        text:"Yes"
+        on_active:
+          root.supervisor = self.text
+        pos_hint:{"x":0.4,"y":0.4}
+        size_hint:0.2,0.1
+        color:0,0,1,1
+
+      CheckBox:
+        group:"check"
+        text:"No"
+        on_active:
+          root.supervisor = self.text
+        pos_hint:{"x":0.4,"y":0.3}
+        size_hint:0.2,0.1
+        color:1,0,0,1
 
       Spinner:
-        id:supervisor
+        id:sup
         text:"Supervisor"
-        background_color:1,0,0,1
+        pos_hint:{"x":0.7,"y":0.4}
         size_hint:0.2,0.1
-        pos_hint:{"x":0.6,"y":0.3}
-        values:root.supervisor
-        option_cls:Factory.get("SpinnerOptions7")
         font_size:26
+        background_color:0,1,1,1
 
 
 
-
-      FloatLayout:
-        pos_hint:{"x":0.0,"y":0.3}
-        orientation:"vertical"
-        MDRoundFlatIconButton:
-          icon:"folder"
-          md_bg_color:0,1,1,1
-          text_color:0,0,0,1
-
-          size:100,59
-          pos_hint:{"x":0.1,"y":0.2}
-          on_release:
-            root.add()
+      MDRoundFlatIconButton:
+        icon:"folder"
+        md_bg_color:0,1,1,1
+        text_color:0,0,0,1
+        text:"SAVE"
+        size_hint:0.2,0.1
+        font_size:26
+        size:100,59
+        pos_hint:{"x":0.1,"y":0.1}
+        on_release:
+          root.add()
 
 
-        MDRoundFlatIconButton:
-          icon:"arrow-left"
-          size:100,59
-          md_bg_color:1,0,0,1
-          text_color:0,0,0,1
-          on_release:
-            root.back()
+      MDRoundFlatIconButton:
+        icon:"arrow-left"
+        size:100,59
+        md_bg_color:1,0,0,1
+        text_color:1,1,1,1
+        size_hint:0.2,0.1
+        font_size:26
+        text:"BACK"
+        on_release:
+          root.back()
+        pos_hint:{"x":0.4,"y":0.1}
 
 
-          pos_hint:{"x":0.1,"y":0.0}
 
 <RV>:
   name:"view"
@@ -701,13 +779,13 @@ Window:
     FloatLayout:
       Image:
         size_hint:0.5,0.2
-        pos_hint:{"x":0.2,"y":0.8}
+        pos_hint:{"x":0.25,"y":0.8}
         source:"afsc.png"
       RecycleView:
         viewclass: 'TaskLayout'
         size_hint:0.4,0.5
-        pos_hint:{"x":0.5,"y":0.3}
-        data:[{'text': str(x)} for x in root.staff]
+        pos_hint:{"x":0.5,"y":0.2}
+        data:[{'text': str(x)} for x in root.manager.user.staff]
         RecycleBoxLayout:
           default_size: None, dp(50)
           default_size_hint: 1, None
@@ -716,25 +794,33 @@ Window:
           touch_multiselect: False
           size_hint_y: None
           height: self.minimum_height
-      Button:
+      MDRectangleFlatIconButton:
         text:"BACK"
+        icon:"arrow-left"
         pos_hint:{"x":0.1,"y":0.1}
         font_size:26
         size_hint:0.2,0.1
+        md_bg_color:0,1,1,1
+        text_color:0,0,0,1
         on_release:
           root.clear()
           root.position()
           app.root.current ="admin" if root.manager.user.position =="Admin" else "users"
-      Button:
-        text:"Refresh"
+      Label:
+        text:"Week's Progress:"
+        pos_hint:{"x":0.1,"y":0.4}
+        font_size:26
+        size_hint:0.2,0.1
+        color:0,0,0,1
+      Label:
+        text:root.percentage +"%"
         pos_hint:{"x":0.1,"y":0.3}
         font_size:26
-        background_color:0,1,0,1
         size_hint:0.2,0.1
-        on_release:
-          root.refresh()
+        color:1,0,1,1
+        
       Label:
-        text:"Tasks Pending"
+        text:"Tasks Pending:"
         pos_hint:{"x":0.1,"y":0.6}
         font_size:26
         size_hint:0.2,0.1
@@ -811,50 +897,3 @@ Window:
 <TaskLayout>
   btn:btn
   id:btn
-
-<Surbodinates>
-  name:"sur"
-  canvas.before:
-    Color:
-      rgba:1,1,1,1
-    Rectangle:
-      pos:self.pos
-      size:self.size
-  GridLayout:
-    cols:2
-    FloatLayout:
-      Image:
-        size_hint:0.5,0.2
-        pos_hint:{"x":0.2,"y":0.8}
-        source:"afsc.png"
-      RecycleView:
-        viewclass: 'SurbodinatesList'
-        size_hint:0.4,0.5
-        pos_hint:{"x":0.5,"y":0.3}
-        data:[{'text': str(x)} for x in root.surbodinates]
-        RecycleBoxLayout:
-          default_size: None, dp(50)
-          default_size_hint: 1, None
-          orientation: 'vertical'
-          multiselect:False
-          touch_multiselect: False
-          size_hint_y: None
-          height: self.minimum_height
-
-<NewDate>
-  name:"new"
-  canvas.before:
-    Color:
-      rgba:1,1,1,1
-    Rectangle:
-      size:self.size
-      pos:self.pos
-  GridLayout:
-    cols:2
-    FloatLayout:
-      Button:
-        text:"Set New Date"
-        font_size:26
-        background_color:1,0,0,1
-        on_release:
-          root.show_date
