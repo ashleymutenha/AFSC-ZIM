@@ -2,8 +2,6 @@
 #:import MDRoundFlatButton kivymd.uix.button.MDRoundFlatButton
 #:import MDRoundFlatIconButton kivymd.uix.button.MDRoundFlatIconButton
 #:import MDRectangleFlatIconButton kivymd.uix.button.MDRectangleFlatIconButton
-#:import MDDropdownMenu kivymd.uix.menu.MDDropdownMenu
-#: import icon kivy.garden.iconfonts.icon
 
 Window:
   Main:
@@ -14,10 +12,6 @@ Window:
   SignUp:
   RV:
   DeleteStaff:
-
-
-
-
 
 
 
@@ -43,12 +37,6 @@ Window:
   font_size:26
   color:1,1,1,1
 
-
-
-
-
-
-
 <Main>:
   name:"main"
   canvas.before:
@@ -64,11 +52,6 @@ Window:
         size_hint:0.5,0.3
         pos_hint:{"x":0.26,"y":0.7}
         source:"afsc.png"
-
-
-
-
-
       Label:
         text: "UserName"
         size_hint:0.2,0.1
@@ -77,7 +60,7 @@ Window:
         color:0,0,0,1
 
       TextInput:
-        id:u
+        id:username
         on_text:
           root.manager.user.usertext = self.text
         size_hint:0.2,0.1
@@ -140,7 +123,7 @@ Window:
         size_hint:0.2,0.1
         font_size:26
         on_release:
-          u.text =""
+          username.text =""
           p.text =""
         icon:"delete"
         md_bg_color:1,0,0,1
@@ -185,6 +168,7 @@ Window:
 
 
       Label:
+        id:label1
         text: root.manager.user.usertext
         size_hint:0.4,0.1
         pos_hint:{"x":0.0, "y":0.7}
@@ -513,8 +497,6 @@ Window:
         icon:"delete"
         text_color:1,1,1,1
 
-
-
 <AddTask>
   name:"addt"
   canvas.before:
@@ -624,8 +606,6 @@ Window:
           root.position()
           app.root.current ="admin" if root.manager.user.position =="Admin" else "users"
           app.root.transition.direction ="left"
-
-
 
 <AddStaff>
   nm:nm
@@ -783,7 +763,7 @@ Window:
         source:"afsc.png"
       RecycleView:
         viewclass: 'TaskLayout'
-        size_hint:0.4,0.5
+        size_hint:0.3,0.5
         pos_hint:{"x":0.5,"y":0.2}
         data:[{'text': str(x)} for x in root.manager.user.staff]
         RecycleBoxLayout:
@@ -832,9 +812,6 @@ Window:
         font_size:26
         size_hint:0.2,0.1
         color:0,0,0,1
-
-
-
 
 <DeleteStaff>
   name:"delete"
@@ -897,3 +874,48 @@ Window:
 <TaskLayout>
   btn:btn
   id:btn
+
+<Supervise>:
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  RecycleView:
+    viewclass: 'Employee'
+    size_hint:0.4,0.5
+    pos_hint:{"x":0.5,"y":0.4}
+    data:[{'text': str(x)} for x in root.people]
+    RecycleBoxLayout:
+      default_size: None, dp(50)
+      default_size_hint: 1, None
+      orientation: 'vertical'
+      multiselect:False
+      touch_multiselect: True
+      size_hint_y: None
+      height: self.minimum_height
+
+  MDRoundFlatIconButton:
+    text:"Inquire"
+    icon:"magnify"
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.1,"y":0.1}
+    md_bg_color:0,0,0,1
+    text_color:1,1,1,1
+    font_size:22
+
+  MDRoundFlatIconButton:
+    text:"Exit"
+    icon:"xbox"
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.6,"y":0.1}
+    md_bg_color:1,0,0,1
+    text_color:1,1,1,1
+    font_size:22
+
+
+
+
+
+

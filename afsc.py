@@ -24,15 +24,19 @@ class MyState(EventDispatcher):#Stores data that is passed between pages
     notification = StringProperty()
     notification4 = StringProperty()
     dept =StringProperty()
+    people = ListProperty([])
+    userName = ObjectProperty()
 
 
+class State(EventDispatcher):
+    usert = ""
 
 
 class Window(ScreenManager):#Manages all proceeses of all Pages
    user =ObjectProperty(MyState())
 
-class Main(Screen):#Login Page
 
+class Main(Screen):#Login Page
      def Login(self):
         self.manager.user.notification =""
         self.manager.user.staff.clear()
@@ -64,6 +68,8 @@ class Main(Screen):#Login Page
                                 self.parent.current = "admin"
                             else:
                                 self.parent.current = "users"
+
+                    State.usert= self.manager.user.usertext
                     cur.execute("Select TaskName from tasks where Action = %s", (self.manager.user.usertext,))
                     Tasks = []
                     for e in cur:
@@ -92,8 +98,13 @@ class Main(Screen):#Login Page
                         for e in st:
                             self.manager.user.staff.append(e)
                             self.manager.user.pending = str(len(self.manager.user.staff))
+                    cur.execute("SELECT UserName FROM staff WHERE Supervisor = %s ", (self.manager.user.usertext,))
+                    for e in cur:
+                        for i in e:
+                            self.manager.user.people.append(i)
 
-            except Error:
+
+            except Exception:
                 pop = Popup(title="AFSC says", title_color=(0, 0, 0, 1),
                             content=Label(text="Server is currently down inform the Admin",
                                           color=(0, 0, 0, 1)), size=(300, 200), size_hint=(None, None),background ="")
@@ -105,8 +116,9 @@ class SpinnerOpt(SpinnerOption):
 
 class Users(Screen):#Users Page
     dates = ListProperty([])
-
+    r = ""
     def on_enter(self):
+        self.ids.label1 =self.r
         cur.execute("SELECT DOF from tasks where Action =%s",(self.manager.user.usertext,))
         for e in cur:
             for i in e:
@@ -121,72 +133,27 @@ class Users(Screen):#Users Page
                 else:
                     pass
 
-
     def open(self):
         ntf = FloatLayout()
 
-        t = Label(text =self.manager.user.notification1,color =(0,0,0,1),pos_hint ={"x":0.3,"y":0.5},size_hint =(None,None))
+        t = Label(text =self.manager.user.notification1,color =(0,0,0,1),
+                  pos_hint ={"x":0.3,"y":0.5},size_hint =(None,None))
         ntf.add_widget(t)
 
-        t1 = Label(text =self.manager.user.notification2,color =(0,0,0,1),pos_hint ={"x":0.3,"y":0.4},size_hint =(None,None))
+        t1 = Label(text =self.manager.user.notification2,color =(0,0,0,1),
+                   pos_hint ={"x":0.3,"y":0.4},size_hint =(None,None))
         ntf.add_widget(t1)
 
-        t2 = Label(text =self.manager.user.notification3,color =(0,0,0,1),pos_hint ={"x":0.3,"y":0.3},size_hint =(None,None))
+        t2 = Label(text =self.manager.user.notification3,color =(0,0,0,1),
+                   pos_hint ={"x":0.3,"y":0.3},size_hint =(None,None))
         ntf.add_widget(t2)
 
-        p = Popup(title ="AFSC says",title_color =(0,0,0,1),background ="",size =(450,250),size_hint =(None,None),content = ntf)
+        p = Popup(title ="AFSC says",title_color =(0,0,0,1),background ="",
+                  size =(450,250),size_hint =(None,None),content = ntf)
         p.open()
 
     def supervise(self):
-        def employee(instance):
-            p.dismiss()
-            tasks = []
-            cur.execute("Select DOF from tasks where Action  = %s",(spi.text))
-            for e in cur:
-                for i in e:
-                    date = dt.strptime(i,"%Y-%m-%d").date()
-                    if date>=start and date<=end:
-                        weekdate = date
-            cur.execute("SELECT TaskName from tasks WHERE Action = %s and DOF =%s",(spi.text,weekdate))
-            for e in cur:
-                for i in e:
-                    tasks.append(i)
-
-            tsk = FloatLayout()
-            spi1 = Spinner(text = "SELECT TASKS",values=tasks,size=(190,40),size_hint =(None,None),
-                           pos_hint ={"x":0.4,"y":0.6},option_cls=Factory.get("SpinnerOpt"),background_color =(0,0,0,1))
-            tsk.add_widget(spi1)
-
-            b2 = MDFillRoundFlatIconButton(text = "Inquire",size =(150,40),size_hint =(None,None),pos_hint ={"x":0.0,"y":0.0},icon ="magnify")
-            tsk.add_widget(b2)
-
-            po = Popup(title ="Task Assessment",content =tsk,title_color=(0,0,0,1),
-                       size=(350,200),size_hint =(None,None),background ="")
-            po.open()
-
-
-
-
-        staff = []
-        cur.execute("SELECT UserName from staff WHERE Supervisor =%s",(self.manager.user.usertext))
-        for e in cur:
-            for i in e:
-                staff.append(i)
-        sup = FloatLayout()
-
-
-        spi = Spinner(text = "SELECT staff",values =staff,size_hint =(None,None),
-                      pos_hint ={"x":0.4,"y":0.6},
-                      size =(190,40),background_color =(0,0,0,1),option_cls =Factory.get("SpinnerOpt"),font_size=22)
-        sup.add_widget(spi)
-
-        b1 = MDFillRoundFlatIconButton(text ="Search",size_hint =(None,None),pos_hint ={"x":0.0,"y":0.0},
-                    size =(150,40),md_bg_color = (1,0,1,1),icon ="magnify",text_color=(1,1,1,1),on_press =employee)
-        sup.add_widget(b1)
-
-        p = Popup(title ="Supervision",title_color =(0,0,0,1),content =sup,size_hint =(None,None)
-                  ,size=(400,250),background ="")
-        p.open()
+        Supervise()
 
 
 class Admin(Screen):#Admin page
@@ -301,12 +268,6 @@ class AddTask(Screen):#Page for adding Tasks
          self.ids.cale.text = str(the_date)
 
 
-
-
-
-
-
-
     def  submit(self):
         self.manager.user.taskdate = self.ids.cale.text
         tasks =[]
@@ -388,22 +349,15 @@ class AddStaff(Screen):#Page for adding staff
             pop.open()
 
 
-
-
-
-
-
-
-
     def back(self):
-        
+
         self.parent.current ="admin"
 
-class TaskLayout(Button,Window,RecycleBoxLayout,LayoutSelectionBehavior,Label):#class with definations of how Tasks will look like in the tasks page
-    background_color=(1,0,1,1)
+class TaskLayout(Button,Window):#class with definations of how Tasks will look like in the tasks page
+    background_color =(1,0,1,1)
     btn =ObjectProperty()
     d1 = ObjectProperty()
-    font_size =22
+    font_size =26
 
 
     def on_press(self):
@@ -588,9 +542,25 @@ class DeleteStaff(Screen):# Page/ Screen for deleting staff
     def back(self):
         self.u.clear()
 
+def Supervise():
+    class Supervise(FloatLayout):
+        people =[]
+        cur.execute("SELECT UserName from staff WHERE Supervisor =%s",(State.usert))
+        for e in cur:
+            for i in e:
+                people.append(i)
+        if len(people)==0:
+            people.append("Operation denied")
 
 
+    class Employee(Button):
+        font_size =22
+        background_color=1,0,1,1
 
+    r =Supervise()
+    p =Popup(size =(500,400),title ="Supervision",title_color=(0,0,0,1),content =r,
+             size_hint=(None,None),background="",)
+    p.open()
 
 
 kv =Builder.load_file("afsc.kv")
@@ -601,6 +571,8 @@ class AFSC(App):
     theme_cls.accent_palette = "Blue"
     theme_cls.theme_style ="Light"
     title = "AFSC ZIMBABWE"
+    Name = Window()
+    nam= Name.user
 
 
     def build(self):
