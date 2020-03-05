@@ -25,17 +25,11 @@ Window:
   background_color:0,0,0,1
   color:1,1,1,1
 
-
-<SpinnerOptions2@SpinnerOption>
-  background_color:1,1,1,1
-  font_size:26
-  color:0,0,0,1
-  background_normal:""
-
 <SpinnerOptions3@SpinnerOption>
-  background_color:1,0,1,1
   font_size:26
+  background_color:1,0,1,1
   color:1,1,1,1
+
 
 <Main>:
   name:"main"
@@ -49,9 +43,9 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.5,0.3
+        size_hint:0.5,0.24
         pos_hint:{"x":0.26,"y":0.7}
-        source:"afsc.png"
+        source:"afsc.JPG"
       Label:
         text: "UserName"
         size_hint:0.2,0.1
@@ -144,9 +138,9 @@ Window:
     cols:2
     FloatLayout:
       Image:
-        size_hint:0.5,0.3
+        size_hint:0.5,0.25
         pos_hint:{"x":0.2,"y":0.7}
-        source:"afsc.png"
+        source:"afsc.JPG"
 
 
       MDRoundFlatIconButton:
@@ -158,6 +152,8 @@ Window:
         md_bg_color:1,1,1,1
         text_color:1,0,0,1
         font_size:26
+        on_release:
+          root.notify()
 
       Label:
         text:"Welcome"
@@ -300,8 +296,8 @@ Window:
         text_color:1,0,0,1
 
       Image:
-        size_hint:0.5,0.2
-        pos_hint:{"x":0.2,"y":0.7}
+        size_hint:0.39,0.3
+        pos_hint:{"x":0.31,"y":0.7}
         source:"afsc.png"
       TabbedPanel:
         do_default_tab: False
@@ -348,7 +344,7 @@ Window:
                 background_color:1,0,1,1
                 font_size:26
                 on_release:
-                  app.root.current ="supervision"
+                  root.supervise()
                   app.root.transition.direction = "up"
 
 
@@ -414,7 +410,7 @@ Window:
       Image:
         size_hint:0.4,0.2
         pos_hint:{"x":0.3,"y":0.8}
-        source:"afsc.png"
+        source:"afsc.JPG"
 
       Label:
         text:"UserName"
@@ -511,7 +507,7 @@ Window:
       Image:
         size_hint:0.5,0.2
         pos_hint:{"x":0.3,"y":0.8}
-        source:"afsc.png"
+        source:"afsc.JPG"
 
       Label:
         text:"TaskName"
@@ -621,8 +617,8 @@ Window:
     FloatLayout:
       Image:
         size_hint:0.5,0.2
-        pos_hint:{"x":0.1,"y":0.8}
-        source:"afsc.png"
+        pos_hint:{"x":0.3,"y":0.8}
+        source:"afsc.JPG"
 
       Label:
         text:"Name"
@@ -746,6 +742,8 @@ Window:
 
 
 
+
+
 <RV>:
   name:"view"
   canvas.before:
@@ -759,11 +757,11 @@ Window:
     FloatLayout:
       Image:
         size_hint:0.5,0.2
-        pos_hint:{"x":0.25,"y":0.8}
-        source:"afsc.png"
+        pos_hint:{"x":0.3,"y":0.8}
+        source:"afsc.JPG"
       RecycleView:
         viewclass: 'TaskLayout'
-        size_hint:0.3,0.5
+        size_hint:0.4,0.5
         pos_hint:{"x":0.5,"y":0.2}
         data:[{'text': str(x)} for x in root.manager.user.staff]
         RecycleBoxLayout:
@@ -800,7 +798,7 @@ Window:
         color:1,0,1,1
         
       Label:
-        text:"Tasks Pending:"
+        text:"Tasks Pending" +"\n" +"For the Week:"
         pos_hint:{"x":0.1,"y":0.6}
         font_size:26
         size_hint:0.2,0.1
@@ -830,16 +828,6 @@ Window:
         size_hint:0.4,0.2
         pos_hint:{"x":0.3,"y":0.8}
         source:"afsc.png"
-
-      Label:
-        text:"SELECT NAME"
-        size_hint:0.4,0.1
-        pos_hint:{"x":0.1,"y":0.6}
-        color:1,0,0,1
-        font_size:26
-
-
-
       Spinner:
         id:spi
         text:"Choose Name"
@@ -847,26 +835,26 @@ Window:
         size_hint:0.3,0.1
         pos_hint:{"x":0.5,"y":0.6}
         font_size:26
-        background_normal:''
-        background_color:1,1,1,1
-        option_cls:Factory.get("SpinnerOptions2")
-        color:0,0,0,1
+        background_color:1,0,1,1
+        option_cls:Factory.get("SpinnerOptions3")
 
-      Button:
+      MDFillRoundFlatIconButton:
         text:"DELETE"
+        icon:"xbox"
         font_size:26
-        pos_hint:{"x":0.2,"y":0.4}
-        size_hint:0.3,0.1
-        background_color:0,0,0,1
+        pos_hint:{"x":0.1,"y":0.6}
+        size_hint:0.2,0.1
+        md_bg_color:1,1,1,1
+        text_color:0,0,1,1
         on_release:
           root.delete()
 
-      Button:
+      MDFillRoundFlatIconButton:
         text:"BACK"
+        icon:"arrow-left"
         font_size:26
-        pos_hint:{"x":0.2,"y":0.3}
-        size_hint:0.3,0.1
-        background_color:1,1,1,1
+        pos_hint:{"x":0.1,"y":0.4}
+        size_hint:0.2,0.1
         on_release:
           root.back()
           app.root.transition.direction="up"
@@ -896,26 +884,144 @@ Window:
       size_hint_y: None
       height: self.minimum_height
 
-  MDRoundFlatIconButton:
-    text:"Inquire"
-    icon:"magnify"
-    size_hint:0.4,0.1
-    pos_hint:{"x":0.1,"y":0.1}
-    md_bg_color:0,0,0,1
-    text_color:1,1,1,1
-    font_size:22
 
   MDRoundFlatIconButton:
     text:"Exit"
     icon:"xbox"
     size_hint:0.4,0.1
-    pos_hint:{"x":0.6,"y":0.1}
-    md_bg_color:1,0,0,1
+    pos_hint:{"x":0.0,"y":0.1}
+    md_bg_color:0,1,1,1
+    text_color:0,0,0,1
+    font_size:22
+    on_release:
+      root.clear()
+
+
+
+
+
+<Employee>
+  btn:btn
+  id:btn
+
+<EmployeeTasks>:
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+  RecycleView:
+    viewclass: 'Tasks'
+    size_hint:0.5,0.5
+    pos_hint:{"x":0.3,"y":0.4}
+    data:[{'text': str(x)} for x in root.tasks]
+    RecycleBoxLayout:
+      default_size: None, dp(50)
+      default_size_hint: 1, None
+      orientation: 'vertical'
+      multiselect:True
+      touch_multiselect: True
+      size_hint_y: None
+      height: self.minimum_height
+
+  MDRoundFlatIconButton:
+    text:"Assign Task"
+    icon:"plus"
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.5,"y":0.1}
+    md_bg_color:0,0,0,1
     text_color:1,1,1,1
     font_size:22
+    on_release:
+      root.assign()
+
+<Pend>
+  canvas.before:
+    Color:
+      rgba:1,1,1,1
+    Rectangle:
+      size:self.size
+      pos:self.pos
+
+  MDRoundFlatIconButton:
+    text:"New Date"
+    font_size:22
+    md_bg_color:0,1,1,1
+    text_color:0,0,0,1
+    size_hint:0.5,0.2
+    pos_hint:{"x":0.3,"y":0.4}
+    on_release:
+      root.show_date()
+    icon:"calendar"
+
+<Tasks>
+  lab:lab
+  id:lab
+
+<Assign>
+  Label:
+    text:"TaskName"
+    size_hint:0.2,0.1
+    pos_hint:{"x":0.1,"y":0.8}
+    color:0,0,0,1
+    font_size:22
+  TextInput:
+    id:tname
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.4,"y":0.8}
+    font_size:22
+
+  Label:
+    text:"TaskDescription"
+    size_hint:0.2,0.1
+    pos_hint:{"x":0.1,"y":0.45}
+    color:0,0,0,1
+    font_size:22
+
+  TextInput:
+    id:description
+    size_hint:0.4,0.2
+    pos_hint:{"x":0.4,"y":0.39}
+    font_size:22
+
+  MDRoundFlatIconButton:
+    icon:"calendar"
+    size_hint:0.2,0.1
+    pos_hint:{"x":0.1,"y":0.2}
+    font_size:22
+    md_bg_color:0,0,0,1
+    text_color:1,1,1,1
+    text:"Calendar"
+    on_release:
+      root.show_date()
 
 
+  TextInput:
+    id:cale
+    size_hint:0.4,0.1
+    pos_hint:{"x":0.4,"y":0.2}
+    font_size:22
 
+  MDFillRoundFlatIconButton:
+    icon:"marker"
+    size_hint:0.2,0.1
+    pos_hint:{"x":0.5,"y":0.0}
+    font_size:22
+    md_bg_color:0,0,0,1
+    text_color:1,1,1,1
+    text:"Save"
+    on_release:
+      root.done()
 
-
+  MDRoundFlatIconButton:
+    icon:"arrow-left"
+    size_hint:0.2,0.1
+    pos_hint:{"x":0.1,"y":0.0}
+    font_size:22
+    md_bg_color:0,1,1,1
+    text_color:0,0,0,1
+    text:"Back"
+    on_release:
+      root.dismiss()
 

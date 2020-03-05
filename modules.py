@@ -30,8 +30,12 @@ import pymysql
 import hashlib
 
 
-con = pymysql.connect("192.168.1.162", "Ashley", "nhetz", "afsczim")
-cur = con.cursor()
+
+try:
+    con = pymysql.connect("Localhost", "root", "", "afsczim")
+    cur = con.cursor()
+except Exception:
+   pass
 
 
 
