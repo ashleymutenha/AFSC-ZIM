@@ -41,7 +41,7 @@ class Main(Screen):#Login Page
         if self.manager.user.usertext =="" or self.manager.user.passtext=="":
             pop = Popup(title = "AFSC  says" ,title_color =(0,0,0,1),title_size =22,
                         content =Label(text ="Fill up all fields",color =(0,0,1,1),font_size =22),
-                        size_hint =(None,None), size= (400,200),background ="")
+                        size_hint =(None,None), size= (400,200),background ="",background_color =(0,0,0,0.1),border =(14,14,14,14))
             pop.open()
             u  =self.manager.user.usertext
         else:
@@ -56,7 +56,7 @@ class Main(Screen):#Login Page
                     pop = Popup(title="AFSC says", title_color=(0, 0, 0, 1),title_size =22,
                                     content=Label(text="Wrong Credentials, please verify and try again",
                                                   color=(0, 0, 1, 1),font_size =22), size_hint=(None, None), size=(450, 200),
-                                   background="")
+                                   background="",background_color =(0,0,0,0.1),)
                     pop.open()
                 else:
                     cur.execute("SELECT Role from staff where UserName =%s", (self.manager.user.usertext,))
@@ -99,7 +99,7 @@ class Main(Screen):#Login Page
             except Exception:
                pop = Popup(title="AFSC says", title_color=(0, 0, 0, 1),title_size =22,
                             content=Label(text="Server is currently down inform the Admin",
-                                          color=(0, 0, 1, 1),font_size =22), size=(420, 200), size_hint=(None, None),background ="")
+                                          color=(0, 0, 1, 1),font_size =22), size=(420, 200), size_hint=(None, None),background ="",background_color =(0,0,0,0.1),)
                pop.open()
 
 class SpinnerOpt(SpinnerOption):
@@ -133,7 +133,7 @@ class Users(Screen):#Users Page
         ntf.add_widget(t2)
 
         p = Popup(title ="AFSC says",title_color =(0,0,0,1),background ="",
-                  size =(450,250),size_hint =(None,None),content = ntf)
+                  size =(450,250),size_hint =(None,None),content = ntf,background_color =(0,0,0,0.1),)
         p.open()
 
     def supervise(self):
@@ -187,7 +187,7 @@ class SignUp(Screen):#SignUp page
                                                                                      "\n" +\
                                                                                      " of this organisation", color =(0,0,1,1),font_size =22),
                              size_hint=(None, None),
-                             size=(400, 300),background ="")
+                             size=(400, 300),background ="",background_color =(0,0,0,0.1),)
                 pop.open()
             else:
                 cur.execute("SELECT Password from staff where UserName =%s",(self.user.text,))
@@ -204,14 +204,14 @@ class SignUp(Screen):#SignUp page
                                             text="Registration Complete"+ "\n"+" you can proceed to log into the system",
                                             color=(0, 0, 1, 1),font_size =22),
                                         size_hint=(None, None),
-                                        size=(400, 300), background="")
+                                        size=(400, 300), background="",background_color =(0,0,0,0.1),)
                             pop.open()
                         else:
                             pop = Popup(title="AFSC says", title_color=(0, 0, 0, 1),
                                         content=Label(text="Your have already registered into the system",
                                                       color=(0, 0, 0, 1)),
                                         size_hint=(None, None),
-                                        size=(400, 400), background="", )
+                                        size=(400, 400), background="",background_color =(0,0,0,0.1), )
                             pop.open()
 
 
@@ -220,7 +220,7 @@ class AddTask(Screen):#Page for adding Tasks
 
 
     def show_date(self):
-            MDDatePicker(callback =self.day).open()
+            MDDatePicker(callback =self.day,background_color =(0,0,0,0.1),).open()
 
 
     def day(self,the_date):
@@ -231,7 +231,7 @@ class AddTask(Screen):#Page for adding Tasks
         if self.ids.cale.text =="" or self.manager.user.taskName=="" or self.manager.user.taskdsc=="":
             p =Popup(background ="", title = "AFSC says",title_color =(0,0,0,1),title_size =22,content =Label(text = "Fill all fields",
                                                                                                               color =(0,0,1,1),font_size =22),
-                     size =(250,200),size_hint =(None,None))
+                     size =(250,200),size_hint =(None,None),background_color =(0,0,0,0.1),)
             p.open()
         else:
             self.manager.user.taskdate = self.ids.cale.text
@@ -239,7 +239,7 @@ class AddTask(Screen):#Page for adding Tasks
             if day< tod:
                 pop =Popup(background ="", title = "AFSC says",title_color =(0,0,0,1),title_size =22,content =Label(text = "Date Selection Void",
                       color =(0,0,1,1),font_size =22),
-                     size =(230,200),size_hint =(None,None))
+                     size =(230,200),size_hint =(None,None),background_color =(0,0,0,0.1),)
                 pop.open()
             else:
                 tasks =[]
@@ -250,7 +250,7 @@ class AddTask(Screen):#Page for adding Tasks
                 if len(tasks)!=0:
                     pop = Popup(title ="Task Duplication",title_color =(0,0,0,1),title_size =22, content =Label(text="Duplication! -Task already recorded",
                            color =(0,0,1,1),font_size =22),size =(350,200)
-                     ,size_hint =(None,None),background ="")
+                     ,size_hint =(None,None),background ="",background_color =(0,0,0,0.1),)
                     pop.open()
                 else:
                     cur.execute("INSERT INTO TASKS(Action,TaskName,TaskDescrpt,DOF) VALUES(%s,%s,%s,%s)",(self.manager.user.usertext,self.manager.user.taskName,
@@ -258,7 +258,7 @@ class AddTask(Screen):#Page for adding Tasks
                     con.commit()
                     pop = Popup(title = "AFSC says" ,title_color=(0,0,0,1),title_size =22,
                         content =Label(text = "Task successfully recorded",color =(0,0,1,1),font_size =22),
-                        size =(300, 200), size_hint =(None,None),background ="")
+                        size =(300, 200), size_hint =(None,None),background ="",background_color =(0,0,0,0.1))
                     pop.open()
                     self.manager.user.staff.clear()
                     cur.execute("Select TaskName  from tasks Where Action = %s",(self.manager.user.usertext,))
@@ -277,7 +277,9 @@ class AddTask(Screen):#Page for adding Tasks
         for e in cur:
             for i in e:
                 self.manager.user.position = i
-
+class SpiOption(SpinnerOption):
+    background_color =(0,0,1,1)
+    font_size =22
 
 class AddStaff(Screen):#Page for adding staff
 
@@ -310,7 +312,7 @@ class AddStaff(Screen):#Page for adding staff
         if len(staff)>0:
             pop = Popup(title ="AFSC says",title_color =(0,0,0,1),title_size =22,content = Label(text = "UserName already in use try another one",
                                                                                   color =(0,0,1,1),font_size=22),background ="",size =(350,200)
-                                                                                   ,size_hint =(None,None))
+                                                                                   ,size_hint =(None,None),background_color =(0,0,0,0.1),)
             pop.open()
             staff.clear()
         else:
@@ -320,7 +322,7 @@ class AddStaff(Screen):#Page for adding staff
             pop = Popup(title="AFSC says", title_color=(0, 0, 0, 1),title_size =22,
                         content=Label(text= self.nm.text +"\n"+"successfully added",
                                       color=(0, 0, 1, 1),font_size =22,), background="", size=(350, 200)
-                        , size_hint=(None, None))
+                        , size_hint=(None, None),background_color =(0,0,0,0.1),)
             pop.open()
 
 
@@ -329,7 +331,7 @@ class AddStaff(Screen):#Page for adding staff
         self.parent.current ="admin"
 
 class TaskLayout(Button,Window):#class with definations of how Tasks will look like in the tasks page
-    background_color =(0,1,1,1)
+    background_color =(0,0,1,1)
     btn =ObjectProperty()
     d1 = ObjectProperty()
     color = (1,1,1,1)
@@ -372,7 +374,7 @@ class TaskLayout(Button,Window):#class with definations of how Tasks will look l
                                           color =(0,0,1,1),font_size =22),
                     size=(250, 200),
                     size_hint=(None, None),
-                            background ="")
+                            background ="",background_color =(0,0,0,0.1),)
                   p.open()
           cur.execute("Select TaskDescrpt from tasks where Action = %s and TaskName = %s",(self.user.usertext,self.btn.text,))
           for e in cur:
@@ -400,12 +402,13 @@ class TaskLayout(Button,Window):#class with definations of how Tasks will look l
               b2 =Button(text ="Pending", size=(100,40), pos_hint = {"x":0.5,"y":0.0},size_hint =(None,None),on_press =Pending,
                      background_color =(1,0,0,1),font_size=21)
               t.add_widget(b2)
-              p2 = Popup(title = "Task Assessment",title_color=(0,0,0,1), content = t,size =(680,300), size_hint = (None,None),background ="")
+              p2 = Popup(title = "Task Assessment",title_color=(0,0,0,1), content = t,size =(680,300),
+                         size_hint = (None,None),background ="",background_color =(0,0,0,0.1),)
               p2.open()
           except Exception:
               p2 = Popup(title="Alert", title_color=(0, 0, 0, 1),title_size=22, content=Label(text  ="SOMETHING WRONG",color =(1,0,0,1)
                                                                                 ,font_size =22), size=(680, 300),
-                         size_hint=(None, None), background="")
+                         size_hint=(None, None), background="",background_color =(0,0,0,0.1),)
               p2.open()
       else:
           pass
@@ -489,8 +492,8 @@ class DeleteStaff(Screen):# Page/ Screen for deleting staff
             cur.execute("Delete from staff where UserName = %s",(name,))
             con.commit()
             p = Popup(title ="AFSC says",title_color = (0,0,1,1),title_size =22,content =Label(text = name +"\n" + "was successfully removed from the server",
-                                                                                               color =(0,0,0,1),font_size =22)
-                      ,size_hint =(None,None),size =(400,200),background ="")
+                                                                                               color =(0,0,1,1),font_size =22)
+                      ,size_hint =(None,None),size =(450,200),background ="",background_color =(0,0,0,0.1))
             p.open()
 
         def close(instance):
@@ -498,7 +501,7 @@ class DeleteStaff(Screen):# Page/ Screen for deleting staff
 
         t2 = FloatLayout()
 
-        L1 = Label(text = "Do you really want to delete this employee",color =(0,0,0,1),size_hint=(None,None),pos_hint ={"x":0.4,"y":0.5})
+        L1 = Label(text = "Do you really want to delete this employee",color =(0,0,0,1),size_hint=(None,None),pos_hint ={"x":0.4,"y":0.5},font_size =22)
         t2.add_widget(L1)
 
         b1 =MDFillRoundFlatIconButton(text = "Yes",md_bg_color =(0,1,1,1),text_color=(0,0,0,1),
@@ -510,7 +513,8 @@ class DeleteStaff(Screen):# Page/ Screen for deleting staff
 
         t2.add_widget(b2)
 
-        po = Popup(title ="AFSC says",title_color = (0,0,0,1),content =t2,size=(410,270),size_hint =(None,None),background ="")
+        po = Popup(title ="AFSC says",title_color = (0,0,0,1),content =t2,title_size =22,size=(490,270),
+                   size_hint =(None,None),background ="",background_color =(0,0,0,0.1),)
         po.open()
 
 
@@ -537,9 +541,10 @@ def Supervise():
 
     class Employee(Button):
         font_size =22
-        background_color=1,0,1,1
+        background_color=(1,1,1,0.0)
         btn = ObjectProperty()
         user = StringProperty()
+        color =(0,0,0,1)
 
         def on_press(self):
             p.dismiss()
@@ -574,13 +579,13 @@ def Supervise():
                             con.commit()
                             p1 = Popup(content=Label(text ="Task Assignment to"+"\n"+State.emp +"Successfull",color =(0,0,1,1),font_size =22),
                                                                           background="", title="Confirmation",
-                                      title_color=(0, 0, 1, 1), title_size=22, size=(300, 300),size_hint=(None,None))
+                                      title_color=(0, 0, 1, 1), title_size=22, size=(300, 300),size_hint=(None,None),background_color =(0,0,0,0.1),)
 
                             p1.open()
 
                     a =Assign()
                     p =Popup(content =a,background ="",title ="Assign task to" +"\n" +State.emp,
-                             title_color =(0,0,1,1),title_size =22,size =(500,300))
+                             title_color =(0,0,1,1),title_size =22,size =(500,300),background_color =(0,0,0,0.1),)
                     p.open()
 
 
@@ -593,7 +598,7 @@ def Supervise():
                 font_size=22
                 lab = ObjectProperty()
                 background_color =(1,1,1,0.0)
-                color = (0,0,1,1)
+                color = (0,0,0,1)
                 user =self.user
 
 
@@ -633,12 +638,12 @@ def Supervise():
                         y = t
                         p2 = Popup(size=(550, 370), title="Task Description", title_size=22, title_color=(0, 0, 0, 1),
                                content=y,
-                               size_hint=(None, None), background="",background_color =(0,0,0,0.5))
+                               size_hint=(None, None), background="",background_color =(0,0,0,0.1))
                         p2.open()
                     except:
                         p2 = Popup(size=(350, 370), title="Error", title_size=22, title_color=(0, 0, 0, 1),
                                    content=Label(text ="Operation Void",color =(1,0,0,1),font_size =22),
-                                   size_hint=(None, None), background="", background_color=(0, 0, 0, 0.5))
+                                   size_hint=(None, None), background="", background_color =(0,0,0,0.1),)
                         p2.open()
 
 
@@ -647,13 +652,13 @@ def Supervise():
             em  =EmployeeTasks()
             p.dismiss()
             p1 = Popup(size=(500, 370), title="Tasks Pending",title_size =22, title_color=(0, 0, 0, 1), content=em,
-                      size_hint=(None, None), background="",background_color =(0,0,0,0.5))
+                      size_hint=(None, None), background="",background_color =(0,0,0,0.1),)
             p1.open()
 
 
     r =Supervise()
     p =Popup(size =(500,370),title ="Supervision",title_size =22 ,title_color=(0,0,0,1),content =r,
-             size_hint=(None,None),background="",background_color =(0,0,0,0.5))
+             size_hint=(None,None),background="",background_color =(0,0,0,0.1),)
     p.open()
 
 
@@ -661,7 +666,7 @@ def Pending(instance):
     class Pend(FloatLayout):
 
         def show_date(self):
-            MDDatePicker(callback=self.day).open()
+            MDDatePicker(callback=self.day,background_color =(0,0,0,0.1)).open()
 
         def day(self, the_date):
             cur.execute("Update tasks Set DOF =%s where Action = %s",(str(the_date),State.usert,))
@@ -669,14 +674,14 @@ def Pending(instance):
             p.dismiss()
             p1= Popup(title="Confirmation", title_color=(0, 0, 0, 1),title_size =22, size=(200, 200), size_hint=(None, None),
                       background="", content=Label(text = "New Deadline set to" +"\n"\
-                                                   +str(the_date),color =(0,0,0,1)))
+                                                   +str(the_date),color =(0,0,0,1)),background_color =(0,0,0,0.1))
             p1.open()
 
 
     d =Pend()
 
     p = Popup(title ="SET NEW DEADLINE",title_color =(0,0,0,1),size= (350,200),size_hint =(None,None),
-              background ="",content =d)
+              background ="",content =d,background_color =(0,0,0,0.1),)
     p.open()
 
 def Notifications():

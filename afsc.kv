@@ -620,20 +620,12 @@ Window:
         pos_hint:{"x":0.3,"y":0.8}
         source:"afsc.JPG"
 
-      Label:
-        text:"Name"
-        font_size:26
-        pos_hint:{"x":0.1,"y":0.6}
-        font_size:26
-        size_hint:0.2,0.1
-        color:0,0,0,1
-
 
 
       TextInput:
         id:nm
         hint_text:"INITIALS"
-        pos_hint:{"x":0.4,"y":0.6}
+        pos_hint:{"x":0.1,"y":0.6}
         size_hint:0.2,0.1
         color:0,0,0,1
         font_size:26
@@ -644,7 +636,7 @@ Window:
         id:department
         text:"Department"
         values:['FA','CR','PO','MEAL']
-        pos_hint:{"x":0.7,"y":0.6}
+        pos_hint:{"x":0.6,"y":0.6}
         size_hint:0.2,0.1
         font_size:26
         background_color:1,0,1,1
@@ -669,7 +661,7 @@ Window:
       Label:
         text:"Supervision"
         size_hint:0.2,0.1
-        pos_hint:{"x":0.1,"y":0.4}
+        pos_hint:{"x":0.07,"y":0.4}
         font_size:26
         color:0,0,0,1
 
@@ -678,21 +670,21 @@ Window:
         color:0,0,1,1
         font_size:26
         size_hint:0.2,0.1
-        pos_hint:{"x":0.3,"y":0.4}
+        pos_hint:{"x":0.2,"y":0.4}
 
       Label:
         text:"No"
         color:1,0,0,1
         font_size:26
         size_hint:0.2,0.1
-        pos_hint:{"x":0.3,"y":0.3}
+        pos_hint:{"x":0.2,"y":0.3}
 
       CheckBox:
         group:"check"
         text:"Yes"
         on_active:
           root.supervisor = self.text
-        pos_hint:{"x":0.4,"y":0.4}
+        pos_hint:{"x":0.3,"y":0.4}
         size_hint:0.2,0.1
         color:0,0,1,1
 
@@ -701,17 +693,18 @@ Window:
         text:"No"
         on_active:
           root.supervisor = self.text
-        pos_hint:{"x":0.4,"y":0.3}
+        pos_hint:{"x":0.3,"y":0.3}
         size_hint:0.2,0.1
         color:1,0,0,1
 
       Spinner:
         id:sup
         text:"Supervisor"
-        pos_hint:{"x":0.7,"y":0.4}
+        pos_hint:{"x":0.6,"y":0.4}
         size_hint:0.2,0.1
         font_size:26
-        background_color:0,1,1,1
+        background_color:0,0,1,1
+        option_cls:Factory.get("SpiOption")
 
 
 
